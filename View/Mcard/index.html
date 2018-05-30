@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+        <meta charset="utf-8" />
+        <title>{$current['title']}-{$Think.CONFIG.title}</title>
+
+        <meta name="keywords" content="{$Think.CONFIG.keywords}" />
+        <meta name="description" content="{$Think.CONFIG.description}" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+
+        <include file="Public/head" />
+    </head>
+
+    <body class="no-skin">
+        <include file="Public/header" />
+        <div class="main-container" id="main-container">
+            <script type="text/javascript">
+                try{ace.settings.check('main-container' , 'fixed')}catch(e){}
+            </script>
+
+            <include file="Public/sidebar" />
+            <div class="main-content">
+                <div class="main-content-inner">
+                    <!-- #section:basics/content.breadcrumbs -->
+                    <include file="Public/breadcrumbs" />
+
+                    <!-- /section:basics/content.breadcrumbs -->
+                    <div class="page-content">
+                        <include file="Public/set" />
+
+                        <!-- /section:settings.box -->
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <!-- PAGE CONTENT BEGINS -->
+                                <div class="row">
+                                    <form class="form-inline" action="{:U('search')}" method="POST">
+                                        <input type="hidden" id="authStatus" name="info[authStatus]" value="{$authStatus}"> 
+                                        <label class="inline">商品类型</label>
+                                        <select name="info[offer_id]" class="form-control"> 
+                                            <option value="" selected>--请选择--</option>
+                                            <!--if condition="$val['id'] eq $member['group_id']">selected="selected"</if>-->
+                                            <volist name="offers" id="o">
+                                                <option value="{$o['offer_id']}">{$o['offer_name']}</option> 
+                                            </volist>    
+
+                                        </select>
+
+
+                                        <label class="inline">&nbsp;&nbsp;号码地市：</label>                                         
+                                        <select id="region" name="info[region]" class="form-control" required>
+                                            <option value="" selected>--请选择号码地市--</option>
+                                            <volist name="city" id="v">
+                                                <option value="{$v['areaname']}">{$v['areaname']}</option> 
+                                            </volist>                                          
+
+                                        </select>
+
+
+                                        <label class="inline">待选号码：</label>
+                                        <input type="text" name="info[mobile]" class="form-control" required>
+                                        <button type="submit" class="btn btn-purple btn-sm">
+                                            <span class="ace-icon fa fa-search icon-on-right bigger-110"></span>
+                                            查询
+                                        </button>
+
+                                    </form>
+
+                                </div>
+                                <div class="space-4"></div>
+                                <div class="row">
+                                    <form id="form" method="post" action="">
+                                        <input type="hidden" value="{$u['idcard']}" id="idcard" name="info[idcard]">
+                                        <table class="table table-striped table-bordered table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th class="center"><input class="check-all" type="checkbox" value=""></th>
+                                                    <th>#</th>
+                                                    <th>地市</th>                                                 
+                                                    <th>手机号码</th>
+                                                    <th>价格</th>
+                                                    <th>状态</th>
+                                                    <th>描述</th> 
+                                                    <th>操作</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <style>
+                                                    .grouptd{position:relative;}
+                                                    .group{display:inline-block;width:100%;}
+                                                    .groupselect{position:absolute;top:0;left:0;width:100%;height:100%;border:0;}
+                                                </style>
+                                                <volist name="list" id="vo">
+                                                    <tr>
+                                                        <td class="center">
+                                                            <input class="uids" type="checkbox" name="uids[]" value="{$vo['uid']}">
+                                                        </td> 
+                                                        <td>{$i}</td> 
+                                                        <td>{$region}</td>
+                                                        <td>{$vo['TelNum']}</td>
+                                                        <td>{$vo['TelPrice']}</td>
+                                                        <td>{$vo['status']}</td>                                                
+                                                        <td>{$vo['remark']}</td>
+                                                        <td class="left" title="核验身份"><a href="{:U('Identity/index')}?region={$u['region']}&offer_id={$u['offer_id']}&telnum={$vo['TelNum']}&price={$vo['TelPrice']}&idcard={$u['idcard']}"><i class="ace-icon fa fa-weibo bigger-100"></i>&nbsp;核验身份</a></td>
+                                                    </tr>
+                                                </volist>
+                                            </tbody>
+                                        </table>
+                                    </form>
+
+                                    {$page}
+                                </div>
+                                <!-- PAGE CONTENT ENDS -->
+                            </div><!-- /.col -->
+                        </div><!-- /.row -->
+                    </div><!-- /.page-content -->
+                </div>
+            </div><!-- /.main-content -->
+            <include file="Public/footer" />
+
+        </div><!-- /.main-container -->
+
+        <include file="Public/footerjs" />
+        <!-- inline scripts related to this page -->
+        <script type="text/javascript">
+            $(function(){
+                function isMobile(str)  
+                { 
+                    if(/^(1|1|1|1|1)\d{10}$/.test(str) && str.length == 11)  
+                    {  
+                        return true;  
+                    }  
+                    return false;  
+                }  
+
+                $("#search").click(function(){           
+                    var mobile = $.trim($('#mobile').val());
+                    var fluxnum = $.trim($('#fluxnum').val());
+
+                    if(!isMobile(mobile)){
+                        $('#apptc').html("请输入正确的手机号码");
+                        $('#apptc').css('display','block');
+                        return;
+                    }  
+                });
+            })
+        </script>
+    </body>
+</html>

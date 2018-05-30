@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+        <meta charset="utf-8" />
+        <title>{$current['title']}-{$Think.CONFIG.title}</title>
+
+        <meta name="keywords" content="{$Think.CONFIG.keywords}" />
+        <meta name="description" content="{$Think.CONFIG.description}" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+
+        <include file="Public/head" />
+    </head>
+
+    <body class="no-skin">
+        <include file="Public/header" />
+        <include file="Public/fileinput" />
+        <div class="main-container" id="main-container">
+            <script type="text/javascript">
+                try{ace.settings.check('main-container' , 'fixed')}catch(e){}
+            </script>
+
+            <include file="Public/sidebar" />
+            <div class="main-content">
+                <div class="main-content-inner">
+                    <!-- #section:basics/content.breadcrumbs -->
+                    <include file="Public/breadcrumbs" />
+
+                    <!-- /section:basics/content.breadcrumbs -->
+                    <div class="page-content">
+                        <include file="Public/set" />
+
+                        <!-- /section:settings.box -->
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <!-- PAGE CONTENT BEGINS -->
+                                <div id="errorBlock" class="help-block">----------------------</div> 
+                                <form enctype="multipart/form-data">
+                                    <div class="form-group">
+                                        <label>文件1-显示预览</label>
+                                        <input id="file-1" type="file" multiple class="file" data-overwrite-initial="false" data-min-file-count="1">  
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>文件2-不显示预览</label>
+                                        <input id="file-2" type="file" multiple class="file" data-overwrite-initial="false" data-min-file-count="1"data-show-preview="false"> 
+                                    </div>
+
+
+
+
+                                    <div class="space-4"></div>
+
+                                    <div class="col-md-offset-2 col-md-9">
+                                        <button class="btn btn-info" type="submit">
+                                            <i class="icon-ok bigger-110"></i>
+                                            提交
+                                        </button>
+
+                                        &nbsp; &nbsp; &nbsp;
+                                        <button class="btn" type="reset">
+                                            <i class="icon-undo bigger-110"></i>
+                                            重置
+                                        </button>
+                                    </div>
+                                </form>
+                                <!-- PAGE CONTENT ENDS -->
+                            </div><!-- /.col -->
+                        </div><!-- /.row -->
+                    </div><!-- /.page-content -->
+                </div>
+            </div><!-- /.main-content -->
+            <include file="Public/footer" />
+
+        </div><!-- /.main-container -->
+
+        <include file="Public/footerjs" />
+        <!-- inline scripts related to this page -->
+        <script>
+
+
+            $("#file-1").fileinput({
+                language: 'zh', //设置语言
+                uploadUrl: "{:U('upload')}", // you must set a valid URL here else you will get an error
+                allowedFileExtensions : ['jpg', 'png','gif','txt'],
+                overwriteInitial: false,
+                maxFileSize: 1000,
+                maxFilesNum: 10,
+                //allowedFileTypes: ['image', 'video', 'flash'],
+                elErrorContainer: "#errorBlock",
+                slugCallback: function(filename) {
+                    return filename.replace('(', '_').replace(']', '_');
+                }
+            })
+            .on("filebatchselected", function(event, files) {
+                console.log("filebatchselected");
+                // $(this).fileinput("upload");
+            })
+            //这是提交完成后的回调函数    
+            .on("fileuploaded", function(event, data, previewId, index) {
+                console.log("fileuploaded");
+                if(data.status=='0'){ //上传成功
+                    $("#file-1").html(data.info);
+                }else {  //上传失败
+                    $("#errorBlock").html(data.info);                    
+                }
+
+
+            });
+
+            $("#file-2").fileinput({
+                language: 'zh', //设置语言
+                uploadUrl: "{:U('upload')}", // you must set a valid URL here else you will get an error
+                allowedFileExtensions : ['jpg', 'png','gif','txt'],
+                overwriteInitial: false,
+                maxFileSize: 1000,
+                maxFilesNum: 10,
+                //allowedFileTypes: ['image', 'video', 'flash'],
+                elErrorContainer: "#errorBlock",
+                slugCallback: function(filename) {
+                    return filename.replace('(', '_').replace(']', '_');
+                }
+            })
+            .on("filebatchselected", function(event, files) {
+                console.log("filebatchselected");
+                // $(this).fileinput("upload");
+            })
+            //这是提交完成后的回调函数    
+            .on("fileuploaded", function(event, data, previewId, index) {
+                var form = data.form, files = data.files, extra = data.extra,
+                response = data.response, reader = data.reader;
+                console.log("fileuploaded:" + response.info);
+                if(data.status=='0'){ //上传成功
+                    $("#errorBlock").html(data.info);
+                }else {  //上传失败
+                    $("#errorBlock").html(data.info);                    
+                }
+
+
+            });
+        </script>
+    </body>
+</html>

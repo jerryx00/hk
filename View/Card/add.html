@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+        <meta charset="utf-8" />
+        <title>{$current['title']}-{$Think.CONFIG.title}</title>
+
+        <meta name="keywords" content="{$Think.CONFIG.keywords}" />
+        <meta name="description" content="{$Think.CONFIG.description}" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+
+        <include file="Public/head" />
+        <script type="text/javascript">
+            var countdown=6; 
+            function settime(obj) {
+                if (countdown == 0) { 
+                    obj.removeAttribute("disabled");
+                    countdown = 6   ; 
+                    return;
+                } else { 
+                    obj.setAttribute("disabled", true); 
+                    countdown--;
+                }
+                obj.value = txt;
+                setTimeout(function() { 
+                    settime(obj) }
+                    ,1000)
+            } 
+            function setDisable(obj) {               
+                obj.setAttribute("disabled", true);                   
+            } 
+
+        </script>
+    </head>
+
+    <body class="no-skin">
+        <include file="Public/header" />
+        <div class="main-container" id="main-container">
+            <script type="text/javascript">
+                try{ace.settings.check('main-container' , 'fixed')}catch(e){}
+            </script>
+
+            <include file="Public/sidebar" />
+            <div class="main-content">
+                <div class="main-content-inner">
+                    <!-- #section:basics/content.breadcrumbs -->
+                    <include file="Public/breadcrumbs" />
+
+                    <!-- /section:basics/content.breadcrumbs -->
+                    <div class="page-content">
+                        <include file="Public/set" />
+
+                        <!-- /section:settings.box -->
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <!-- PAGE CONTENT BEGINS -->
+
+                                <form method='post' id="form" name="form" action="{:U('imp')}"  enctype="multipart/form-data" class="form-horizontal">
+                                    <input type="hidden" id="province" name="province" value="{$province}">
+                                    <input type="hidden" id="action" name="action" value="">
+                                    <div class="space-4"></div>
+                                    <div class="form-group">
+                                        <label class="col-sm-1 control-label no-padding-right" for="form-field-10">地市</label>
+                                        <div class="col-sm-9">
+                                            <select id="areaid" name="data[areaid]" class="rcol-xs-10 col-sm-5" required>
+                                                <option value="">----请选择地市----</option>   
+                                                <volist name="arealist" id="area">
+                                                    <option value="{$area['areaid']}">{$area['areaname']}</option>
+                                                </volist>
+
+                                            </select>
+                                            <span class="help-inline col-xs-12 col-sm-7">
+                                                <span class="middle"></span>
+                                            </span>
+                                        </div>
+                                    </div>  
+                                    <div class="space-4"></div>
+
+                                    <div class="form-group">
+                                        <label class="col-sm-1 control-label no-padding-right" for="form-field-10">流量</label>
+                                        <div class="col-sm-9">
+                                            <select id="fluxnum" name="data[fluxnum]" class="rcol-xs-10 col-sm-5" required>
+                                                <option value="">----请选择流量包----</option>   
+                                                <volist name="fluxgroup" id="val">
+                                                    <option value="{$val['fluxnum']}">{$val['desc']}</option>
+                                                </volist>
+
+                                            </select>
+                                            <span class="help-inline col-xs-12 col-sm-7">
+                                                <span class="middle">请慎重选择流量包</span>
+                                            </span>
+                                        </div>
+                                    </div>  
+
+
+                                    <div class="space-4"></div>    
+
+                                    <div class="form-group">
+                                        <label class="col-sm-1 control-label no-padding-right" for="form-field-1"> 折扣 </label>
+                                        <div class="col-sm-9">
+                                            <input type="text" name="data[discount]" id="areaname" placeholder="折扣"
+                                                class="col-xs-10 col-sm-5" value="">
+                                            <span class="help-inline col-xs-12 col-sm-7">
+                                                <span class="middle">请输入1-100之间的数字</span>
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                    <div class="space-4"></div> 
+
+                                    <div class="form-group">
+                                        <label class="col-sm-1 control-label no-padding-right" for="form-field-3"> 备注 </label>
+                                        <div class="col-sm-9">
+                                            <textarea name="description" id="description" placeholder="备注" class="col-xs-10 col-sm-5" rows="3"></textarea>
+                                            <span class="help-inline col-xs-12 col-sm-7">
+                                                <span class="middle"></span>
+                                            </span>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="space-4"></div>
+                                    <div class="form-group">                              
+                                        <div class="col-sm-9">
+                                            <input type="file" name="filename" id="filename" required>
+                                        </div>
+
+                                    </div>
+
+
+
+
+                                </form>
+
+                                <div class="cf">  
+                                    <input id="imp" name="imp" class="btn btn-info" type="submit" value="导入">
+
+                                    <!--input id="notify_0" class="btn btn-info" type="button" value="成功批量回调"-->
+                                    <input id="exp" name="exp" class="btn btn-info" type="button" value="导出">
+
+                                </div>
+                                <!-- PAGE CONTENT ENDS -->
+                            </div><!-- /.col -->
+                        </div><!-- /.row -->
+                    </div><!-- /.page-content -->
+                </div>
+            </div><!-- /.main-content -->
+            <include file="Public/footer" />
+
+        </div><!-- /.main-container -->
+
+        <include file="Public/footerjs" />
+        <!-- inline scripts related to this page --> 
+        <script type="text/javascript">
+            $(function(){ 
+                $("#imp").click(function(){
+                    // 控制按钮为禁用：
+                    //  settime(this,'导入');
+                    //                    $("#imp").attr({"disabled":"disabled"});
+                    //                    var url = "{:U('imp')}";  
+                    //                    //更改form的action  
+                    //                    $("#form").attr("action", url);
+                    //触发submit事件，提交表单   
+                    $("#form").submit();
+                });   
+
+                $("#exp").click(function(){
+                    $("#action").val("1"); 
+                    // settime(this);                  
+                    //                     var url = "{:U('exp')}";  
+                    //                    //更改form的action  
+                    //                    $("#action").attr("action", url);
+                    $("#form").submit();                   
+                }); 
+            })
+        </script> 
+    </body>
+</html>

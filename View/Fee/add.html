@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+        <meta charset="utf-8" />
+        <title>{$current['title']}-{$Think.CONFIG.title}</title>
+
+        <meta name="keywords" content="{$Think.CONFIG.keywords}" />
+        <meta name="description" content="{$Think.CONFIG.description}" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+
+        <include file="Public/head" />
+    </head>
+
+    <body class="no-skin">
+        <include file="Public/header" />
+        <div class="main-container" id="main-container">
+            <script type="text/javascript">
+                try{ace.settings.check('main-container' , 'fixed')}catch(e){}
+            </script>
+
+            <include file="Public/sidebar" />
+            <div class="main-content">
+                <div class="main-content-inner">
+                    <!-- #section:basics/content.breadcrumbs -->
+                    <include file="Public/breadcrumbs" />
+
+                    <!-- /section:basics/content.breadcrumbs -->
+                    <div class="page-content">
+                        <include file="Public/set" />
+
+                        <!-- /section:settings.box -->
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <!-- PAGE CONTENT BEGINS -->
+                                <form class="form-horizontal" id="form" name="form" action="{:u('update')}" method="post">    
+                                    <input type="hidden" name="uid" id="uid" value="{$uid}">    
+                                    <div class="form-group">
+                                        <label class="col-sm-1 control-label no-padding-right" for="form-field-1"> 账号 </label>
+                                        <div class="col-sm-9">
+                                            <input type="text" name="user" id="user" placeholder="" class="col-xs-10 col-sm-5" value="{$vo.user}" disabled>	
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-sm-1 control-label no-padding-right" for="form-field-1"> 用户名 </label>
+                                        <div class="col-sm-9">
+                                            <input type="text" name="name" id="name" placeholder="" class="col-xs-10 col-sm-5" value="{$vo.name}" disabled>                                             
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-sm-1 control-label no-padding-right" for="form-field-1"> 金额(￥) </label>
+                                        <div class="col-sm-9">
+                                            <input type="text" name="unused" id="unused" placeholder="金额" class="col-xs-10 col-sm-5" value="" required>                                             
+                                            <span class="red" id="funderror"></span>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-sm-1 control-label no-padding-right" for="form-field-1"> 说明 </label>
+                                        <div class="col-sm-9">
+                                            <textarea name="desc" id="desc" placeholder="说明" class="col-xs-10 col-sm-5" rows="2" required>{$supplier['ipaddr']}</textarea>                                                                                         
+                                        </div>
+                                    </div>
+
+                                    <div class="space-4"></div>
+                                    <div class="col-md-offset-2 col-md-9">
+                                        <button class="btn btn-info submit" type="button">
+                                            <i class="icon-ok bigger-110"></i>
+                                            提交
+                                        </button>
+
+                                        &nbsp; &nbsp; &nbsp;
+                                        <button class="btn" type="reset">
+                                            <i class="icon-undo bigger-110"></i>
+                                            重置
+                                        </button>
+                                    </div>
+                                </form>
+                                <!-- PAGE CONTENT ENDS -->
+                            </div><!-- /.col -->
+                        </div><!-- /.row -->
+                    </div><!-- /.page-content -->
+                </div>
+            </div><!-- /.main-content -->
+            <include file="Public/footer" />
+
+        </div><!-- /.main-container -->
+
+        <include file="Public/footerjs" />
+        <script src="__PUBLIC__/qwadmin/js/bootbox.js"></script>
+        <script src="__PUBLIC__/qwadmin/js/rmb.js"></script>
+        <!-- inline scripts related to this page --> 
+        <script type="text/javascript">
+            $(".children").click(function(){
+                $(this).parent().parent().parent().parent().find(".father").prop("checked", true);
+            })
+            $(".father").click(function(){
+                if(this.checked){
+                    $(this).parent().parent().parent().parent().find(".children").prop("checked", true);
+                }else{
+                    $(this).parent().parent().parent().parent().find(".children").prop("checked", false);
+                }
+            })
+            $(".submit").click(function(){
+                var title = $("#title").val();
+                if(title==''){
+                    bootbox.dialog({
+                        message: "用户组名称不能为空。", 
+                        buttons: {
+                            "success" : {
+                                "label" : "确定",
+                                "className" : "btn-danger"
+                            }
+                        }
+                    });
+                    return;
+                }
+                $("#form").submit();
+            })
+        </script>
+
+        <script type="text/javascript">
+            $(function(){
+                var vfund = $("#unused").val();
+                var upper = Number2Chinese(vfund);
+                $("#funderror").html(upper);
+
+
+                $('#unused').keyup(function () {
+                    var vfund = $("#unused").val();
+                    var upper = Number2Chinese(vfund);
+                    $("#funderror").html(upper);
+                });
+            });
+        </script>
+    </body>
+</html>

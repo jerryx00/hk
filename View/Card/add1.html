@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+        <meta charset="utf-8" />
+        <title>{$current['title']}-{$Think.CONFIG.title}</title>
+
+        <meta name="keywords" content="{$Think.CONFIG.keywords}" />
+        <meta name="description" content="{$Think.CONFIG.description}" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+
+        <include file="Public/head" />
+    </head>
+
+    <body class="no-skin">
+        <include file="Public/header" />
+        <div class="main-container" id="main-container">
+            <script type="text/javascript">
+                try{ace.settings.check('main-container' , 'fixed')}catch(e){}
+            </script>
+
+            <include file="Public/sidebar" />
+            <div class="main-content">
+                <div class="main-content-inner">
+                    <!-- #section:basics/content.breadcrumbs -->
+                    <include file="Public/breadcrumbs" />
+
+                    <!-- /section:basics/content.breadcrumbs -->
+                    <div class="page-content">
+                        <include file="Public/set" />
+
+                        <!-- /section:settings.box -->
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <!-- PAGE CONTENT BEGINS -->
+
+                                <form method='post' id="form" name="form" action="{:U('exp')}"  enctype="multipart/form-data" class="form-horizontal">
+                                    <input type="hidden" id="province" name="province" value="{$province}">
+                                    <div class="space-4"></div>
+                                    <div class="form-group">
+                                        <label class="col-sm-1 control-label no-padding-right" for="form-field-10">地市</label>
+                                        <div class="col-sm-9">
+                                            <select id="fluxnum" name="data[areaid]" class="rcol-xs-10 col-sm-5" required>
+                                                <option value="">----请选择地市----</option>   
+                                                <volist name="arealist" id="area">
+                                                    <option value="{$area['areaid']}">{$area['areaname']}</option>
+                                                </volist>
+
+                                            </select>
+                                            <span class="help-inline col-xs-12 col-sm-7">
+                                                <span class="middle"></span>
+                                            </span>
+                                        </div>
+                                    </div>  
+                                    <div class="space-4"></div>
+
+                                    <div class="form-group">
+                                        <label class="col-sm-1 control-label no-padding-right" for="form-field-10">流量</label>
+                                        <div class="col-sm-9">
+                                            <select id="fluxnum" name="data[fluxnum]" class="rcol-xs-10 col-sm-5" required>
+                                                <option value="">----请选择流量包----</option>   
+                                                <volist name="fluxgroup" id="val">
+                                                    <option value="{$val['fluxnum']}">{$val['desc']}</option>
+                                                </volist>
+
+                                            </select>
+                                            <span class="help-inline col-xs-12 col-sm-7">
+                                                <span class="middle">请慎重选择流量包</span>
+                                            </span>
+                                        </div>
+                                    </div>  
+
+
+                                    <div class="space-4"></div>    
+                                    <div class="form-group">
+                                        <label class="col-sm-1 control-label no-padding-right" for="form-field-3"> 备注 </label>
+                                        <div class="col-sm-9">
+                                            <textarea name="description" id="description" placeholder="备注" class="col-xs-10 col-sm-5" rows="3"></textarea>
+                                            <span class="help-inline col-xs-12 col-sm-7">
+                                                <span class="middle"></span>
+                                            </span>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="space-4"></div>
+                                    <div class="form-group">                              
+                                        <div class="col-sm-9">
+                                            <input type="file" name="filename" id="filename" required>
+                                        </div>
+
+                                    </div>
+
+
+
+                                    <div class="space-4"></div>
+
+                                    <div class="col-md-offset-2 col-md-9">
+                                        <button class="btn btn-info" type="button" id="import" name="import">
+                                            <i class="icon-ok bigger-110"></i>
+                                            导入
+                                        </button>
+
+                                        
+                                        <input type="button" name="send" onClick="export1();" class="icon-undo bigger-110" value="上传教师名单" >
+                                    </div>
+                                </form>
+                                <!-- PAGE CONTENT ENDS -->
+                            </div><!-- /.col -->
+                        </div><!-- /.row -->
+                    </div><!-- /.page-content -->
+                </div>
+            </div><!-- /.main-content -->
+            <include file="Public/footer" />
+
+        </div><!-- /.main-container -->
+
+        <include file="Public/footerjs" />
+        <!-- inline scripts related to this page -->
+        <script src="__PUBLIC__/qwadmin/js/date-time/bootstrap-datepicker.js"></script>
+        <script type="text/javascript">
+            jQuery(function($){
+                $('#birthday').datepicker({
+                    format: 'yyyy-mm-dd',
+                    weekStart: 1,
+                    autoclose: true,
+                    todayBtn: 'linked',
+                    language: 'cn'
+                });
+
+            });
+        </script> 
+
+        <script type="text/javascript">
+            $(function() {             
+                // $("#export").bind("click", function() {
+                $("#import").click(function(){
+                    // 控制按钮为禁用：
+                    $("#export").attr({"disabled":"disabled"});
+                    var url = "{:U('exp')}";  
+                    //更改form的action  
+                    $("#form").attr("action", url);
+                    //                    document.form.action = url; 
+                    //                    alert(url);  
+
+                    //控制按钮为可用
+                    $("#export").removeAttr("disabled");
+                    //触发submit事件，提交表单   
+                    $("#form").submit();
+//                });
+            });
+            
+            function export1(){     
+                var url = "{:U('exp')}";            
+                document.form.action = url; 
+                form.submit();
+            }
+        </script>   
+    </body>
+</html>

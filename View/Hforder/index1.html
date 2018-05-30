@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+        <meta charset="utf-8" />
+        <title>{$current['title']}-{$Think.CONFIG.title}</title>
+
+        <meta name="keywords" content="{$Think.CONFIG.keywords}" />
+        <meta name="description" content="{$Think.CONFIG.description}" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+
+        <include file="Public/head" />
+   </head>
+
+    <body class="no-skin">
+        <include file="Public/header" />
+        <div class="main-container" id="main-container">
+            <script type="text/javascript">
+                try{ace.settings.check('main-container' , 'fixed')}catch(e){}
+            </script>
+
+            <include file="Public/sidebar" />
+            <div class="main-content">
+                <div class="main-content-inner">
+                    <!-- #section:basics/content.breadcrumbs -->
+                    <include file="Public/breadcrumbs" />
+
+                    <!-- /section:basics/content.breadcrumbs -->
+                    <div class="page-content">
+                        <include file="Public/set" />
+
+                        <!-- /section:settings.box -->
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <!-- PAGE CONTENT BEGINS -->
+                                    <form class="form-horizontal" action="{:U('Yingtong/add')}" method="post">
+                                    <input type="hidden" id="province" name="province" Yingtongvalue="{$province}">
+                                    <div class="form-group">
+                                        <label class="col-sm-1 control-label no-padding-right" for="form-field-1"> 用户姓名 </label>
+                                        <div class="col-sm-9">
+                                            <input type="text" name="user" id="user" class="rcol-xs-10 col-sm-5" value="">
+                                            <span class="help-inline col-xs-12 col-sm-7">
+                                                <span class="middle"></span>
+                                            </span>
+                                        </div>
+                                    </div>
+                            
+                                    
+                                    <div class="space-4"></div>
+
+                                    <div class="form-group">
+                                        <label class="col-sm-1 control-label no-padding-right" for="form-field-2"> 手机号码 </label>
+                                        <div class="col-sm-9">
+                                            <input type="text" name="phone" id="phone" placeholder="手机号码" class="col-xs-10 col-sm-5" value="17798566769" required>
+                                            <span class="help-inline col-xs-12 col-sm-7">
+                                                <span class="middle">不能为空</span>
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                    <div class="space-4"></div>
+                                    <div class="form-group">
+                                        <label class="col-sm-1 control-label no-padding-right" for="form-field-10">运营商</label>
+                                        <div class="col-sm-9">
+                                        <select id="operator" name="operator" class="rcol-xs-10 col-sm-5" required>
+                                            <option value="">----请选择运营商----</option>
+                                            <option value="1" selected>中国移动</option>
+                                            <option value="2" >中国联通</option>
+                                            <option value="3" >中国电信</option>
+                                        </select>
+                                        
+                                        </div>
+                                    </div>
+                                    <div class="space-4"></div>
+                                    <div class="form-group">
+                                        <label class="col-sm-1 control-label no-padding-right" for="form-field-10">省份</label>
+                                        <div class="col-sm-9">
+                                        <select id="province" name="province" class="rcol-xs-10 col-sm-5" required>
+                                            <option value="">----请选择省份----</option>
+                                            <option value="025" selected>江苏</option>                                            
+                                        </select>
+                                        
+                                        </div>
+                                    </div>
+                                    <div class="space-4"></div>
+                                    <div class="form-group">
+                                        <label class="col-sm-1 control-label no-padding-right" for="form-field-10">省份</label>
+                                        <div class="col-sm-9">
+                                        <select id="scope" name="scope" class="rcol-xs-10 col-sm-5" required>
+                                            <option value="">----请选择类型----</option>
+                                            <option value="1">全国</option>                                            
+                                            <option value="2" selected>省内</option>                                            
+                                        </select>
+                                        
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="space-4"></div>
+                                    <div class="form-group">
+                                        <label class="col-sm-1 control-label no-padding-right" for="form-field-10">{$cc} 流量 </label>
+                                        <div class="col-sm-9">
+                                        <select id="fluxnum" name="fluxnum" class="rcol-xs-10 col-sm-5" required>
+                                             <option value="">----请选择流量包----</option>   <option value="025" selected>江苏</option>
+                                             <option value="10" selected>10MB(未开通) </option> 
+                                             <option value="20" >20MB(已开通)</option>
+                                           
+                                        </select>
+                                        <span class="help-inline col-xs-12 col-sm-7">
+                                                <span class="middle">请慎重选择流量包</span>
+                                            </span>
+                                        </div>
+                                    </div>                               
+                                    <div class="space-4"></div>                                     
+                                     <div class="form-group">
+                                        <label class="col-sm-1 control-label no-padding-right" for="form-field-10">生效时间</label>
+                                        <div class="col-sm-9">
+                                        <select id="activeflag" name="activeflag" class="rcol-xs-10 col-sm-5" required>
+                                            <option value="">----请选择流量生效时间----</option>
+                                            <option value="0" >当月</option>                                            
+                                            <option value="1" selected>下月</option>                                            
+                                        </select>
+                                        
+                                        </div>
+                                    </div>
+                                    <div class="space-4"></div>                                     
+                                     <div class="form-group">
+                                        <label class="col-sm-1 control-label no-padding-right" for="form-field-10">有效期</label>
+                                        <div class="col-sm-9">
+                                        <select id="expiration" name="expiration" class="rcol-xs-10 col-sm-5" required>
+                                            <option value="">----请选择流量有效期----</option>
+                                            <option value="1" >1个月</option>                                            
+                                            <option value="3" selected>季包</option>   
+                                            <option value="6" >半年包</option>   
+                                            <option value="12" >年包</option>                                      
+                                        </select>
+                                        
+                                        </div>
+                                    </div>                            
+                                     <div class="space-4"></div>
+                                    <div class="col-md-offset-2 col-md-9">
+                                        <button class="btn btn-info" type="submit">
+                                            <i class="icon-ok bigger-110"></i>
+                                            提交
+                                        </button>
+
+                                        &nbsp; &nbsp; &nbsp;
+                                        <button class="btn" type="reset">
+                                            <i class="icon-undo bigger-110"></i>
+                                            重置
+                                        </button>
+                                    </div>
+                                </form>
+                                <!-- PAGE CONTENT ENDS -->
+                            </div><!-- /.col -->
+                        </div><!-- /.row -->
+                    </div><!-- /.page-content -->
+                </div>
+            </div><!-- /.main-content -->
+            <include file="Public/footer" />
+            
+        </div><!-- /.main-container -->
+
+        <include file="Public/footerjs" />
+        <!-- inline scripts related to this page -->
+        <script src="__PUBLIC__/qwadmin/js/date-time/bootstrap-datepicker.js"></script>
+        <script type="text/javascript">
+        jQuery(function($){
+            $('#birthday').datepicker({
+                  format: 'yyyy-mm-dd',
+                        weekStart: 1,
+                        autoclose: true,
+                        todayBtn: 'linked',
+                        language: 'cn'
+                 });
+            });
+    </script>    
+    </body>
+</html>

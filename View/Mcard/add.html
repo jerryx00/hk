@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+        <meta charset="utf-8" />
+        <title>{$current['title']}-{$Think.CONFIG.title}</title>
+
+        <meta name="keywords" content="{$Think.CONFIG.keywords}" />
+        <meta name="description" content="{$Think.CONFIG.description}" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+
+        <include file="Public/head" />
+
+        <script type="text/javascript">
+            var countdown=6; 
+            function settime(obj) {
+
+                if (countdown == 0) { 
+                    obj.removeAttribute("disabled");
+                    obj.value="提交中";
+                    countdown = 6   ; 
+                    return;
+                } else { 
+                    obj.setAttribute("disabled", true); 
+                    obj.value="重新提交("+ countdown +")"; 
+                    countdown--;
+                }
+                setTimeout(function() { 
+                    settime(obj) }
+                    ,1000)
+            } 
+            function setDisable(obj) {               
+                bj.setAttribute("disabled", true);                   
+            } 
+
+            function isMobile(str)  
+            { 
+                if(/^(1|1|1|1|1)\d{10}$/.test(str) && str.length == 11)  
+                {  
+                    return true;  
+                }  
+                return false;  
+            }  
+        </script>
+        <script src="http://libs.baidu.com/jquery/1.10.2/jquery.min.js"></script>
+    </head>
+
+    <body class="no-skin">
+        <include file="Public/header" />
+        <div class="main-container" id="main-container">
+            <script type="text/javascript">
+                try{ace.settings.check('main-container' , 'fixed')}catch(e){}
+            </script>
+
+            <include file="Public/sidebar" />
+            <div class="main-content">
+                <div class="main-content-inner">
+                    <!-- #section:basics/content.breadcrumbs -->
+                    <include file="Public/breadcrumbs" />
+
+                    <!-- /section:basics/content.breadcrumbs -->
+                    <div class="page-content">
+                        <include file="Public/set" />
+
+                        <!-- /section:settings.box -->
+
+                        <form class="form-horizontal" action="" method="post" id="form" name="form"> 
+                        <input type="hidden" id="idcard" name="data[idcard]" value="{$idcard}">  
+                        <input type="hidden" id="lockid" name="data[lockid]" value="{$lockid}">                                                  
+                            <div class="col-xs-12">
+                            <div class="form-group">
+                                <label class="col-sm-1 control-label no-padding-right" for="form-field-2"> 所选号码 </label>
+                                <div class="col-sm-9">
+                                    <input type="text" name="data[telnum]" id="telnum" placeholder="所选号码" class="col-xs-10 col-sm-5" value="{$telnum}" readonly>                                       
+                                </div>
+                            </div>  
+                            <!--div class="space-4"></div>
+                            <div class="form-group">
+                                <label class="col-sm-1 control-label no-padding-right" for="form-field-2"> 用户名 </label>
+                                <div class="col-sm-9">
+                                    <input type="text" name="data[username]" id="username" placeholder="用户名" class="col-xs-10 col-sm-5" value="{$username}" readonly>                                       
+                                </div>
+                            </div-->
+                            
+                            <div class="space-4"></div>
+                            <div class="form-group">
+                                <label class="col-sm-1 control-label no-padding-right" for="form-field-10">配送方式</label>
+                                <div class="col-sm-9">
+                                    <select id="deliverytype" name="data[delivery_type]" class="rcol-xs-10 col-sm-5">
+                                        <option value="">----请选择配送方式----</option>
+                                        <option value="WXTS">网选厅送</option>
+                                        <option value="WXTQ" selected>网选厅取</option>
+                                        <option value="WXWS" >网选网送</option>
+                                    </select>
+
+                                </div>
+                            </div>                                                          
+                            <div class="space-4"></div>
+                            <div class="form-group">
+                                <label class="col-sm-1 control-label no-padding-right" for="form-field-2"> 收货人电话 </label>
+                                <div class="col-sm-9">
+                                    <input type="text" name="data[delivery_phone]" id="delivery_phone" placeholder="收货人联系电话" class="col-xs-10 col-sm-5" value="" >                                       
+                                </div>
+                            </div>
+
+                            <div class="space-4"></div>
+                            <div class="form-group">
+                                <label class="col-sm-1 control-label no-padding-right" for="form-field-2"> 收货人姓名 </label>
+                                <div class="col-sm-9">
+                                    <input type="text" name="data[delivery_name]" id="delivery_name" placeholder="收货人姓名" class="col-xs-10 col-sm-5" value="" >                                       
+                                </div>
+                            </div>
+
+                            <div class="space-4"></div>
+                            <div class="form-group">
+                                <label class="col-sm-1 control-label no-padding-right" for="form-field-2"> 收货时间段 </label>
+                                <div class="col-sm-9">
+                                    <input type="text" name="data[delivery_period]" id="period" placeholder="客户收货时间段" class="col-xs-10 col-sm-5" value="" >                                       
+                                </div>
+                            </div>
+
+                            <div class="space-4"></div>
+                            <div class="form-group">
+                                <label class="col-sm-1 control-label no-padding-right" for="form-field-2"> 寄送地址 </label>
+                                <div class="col-sm-9">
+                                    <input type="text" name="data[delivery_addr]" id="delivery_addr" placeholder="寄送地址" class="col-xs-10 col-sm-5" value="" >                                       
+                                </div>
+                            </div>
+                            <div class="space-4"></div>
+                            <div class="form-group">
+                                <label class="col-sm-1 control-label no-padding-right" for="form-field-2"> 留言 </label>
+                                <div class="col-sm-9">
+                                    <input type="text" name="data[remark]" id="remark" placeholder="留言" class="col-xs-10 col-sm-5" value="" >                                       
+                                </div>
+                            </div>
+
+                            <div style="display: none; font: 200;" id="apptc" > </div>
+                            <div class="col-md-offset-2 col-md-9">
+                                <button class="btn btn-info" type="button" id="btn" >
+                                    <i class="icon-ok bigger-110"></i>
+                                    提交
+                                </button>
+
+                                &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
+                                <button class="btn" type="reset">
+                                    <i class="icon-undo bigger-110"></i>
+                                    重置
+                                </button>
+                                
+                                 &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
+                                 <button class="btn btn-info" type="button" id="btnlock" >
+                                    <i class="icon-ok bigger-110"></i>
+                                    锁定
+                                </button>
+                            </div>
+                        </form>
+                        <!-- PAGE CONTENT ENDS -->
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
+            </div><!-- /.page-content -->
+        </div>
+        </div><!-- /.main-content -->
+        <include file="Public/footer" />
+
+        </div><!-- /.main-container -->
+
+        <include file="Public/footerjs" />
+        <!-- inline scripts related to this page -->
+        <script src="__PUBLIC__/qwadmin/js/date-time/bootstrap-datepicker.js"></script>
+
+    </body>
+    <SCRIPT type=text/javascript>
+        $(function(){
+            $("#btn").click(function(){           
+                var telnum = $.trim($('#telnum').val());
+
+
+                push_start();    
+                settime(this);
+            });
+        
+            $("#btnlock").click(function(){           
+                var telnum = $.trim($('#telnum').val()); 
+                push_start_lock();    
+                settime(this);
+            });
+        });
+
+        function sendPush(url, callback) { 
+            return $.ajax({
+                type : "POST",
+                url : url,
+                data : $('#form').serialize(),
+                dataType : "json",
+                success : callback
+                });
+        }
+
+        function  push_start() {  
+            var post_url = "{:U('insert')}";  
+            var d= {data:$('#form').serialize()};
+
+
+            //alert(v) ;
+            $('#apptc').html('订单提交中,请稍候...');    
+            sendPush(post_url, function(data) {
+                //alert(data['header']['errcode']);
+                if (data['respcode'] != '0000') {
+                    $('#apptc').html("对不起! 您的订单提交失败。  失败原因: " + data['respmsg']);
+                    $('#apptc').css('display','block'); 
+                } else {
+                    //以下测试用，后续要删除的                     
+                    $('#apptc').html('恭喜,订单提交成功');
+                    $('#apptc').css('display','block'); 
+                    //setDisable(this);
+                } 
+            });
+        } 
+        
+        function  push_start_lock() {  
+            var post_url = "{:U('lockNum')}";  
+            var d= {data:$('#form').serialize()};
+
+
+            //alert(v) ;
+            $('#apptc').html('订单提交中,请稍候...');    
+            sendPush(post_url, function(data) {
+                //alert(data['header']['errcode']);
+                if (data['respcode'] != '0000') {
+                    $('#apptc').html("对不起! 您的订单提交失败。  失败原因: " + data['respmsg']);
+                    $('#apptc').css('display','block'); 
+                } else {
+                    //以下测试用，后续要删除的                     
+                    $('#apptc').html('恭喜,订单提交成功');
+                    $('#apptc').css('display','block'); 
+                    //setDisable(this);
+                } 
+            });
+        }          
+
+    </SCRIPT>
+</html>

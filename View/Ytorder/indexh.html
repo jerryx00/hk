@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+        <meta charset="utf-8" />
+        <title>{$current['title']}-{$Think.CONFIG.title}</title>
+
+        <meta name="keywords" content="{$Think.CONFIG.keywords}" />
+        <meta name="description" content="{$Think.CONFIG.description}" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+
+        <include file="Public/head" />
+    </head>
+
+    <body class="no-skin">
+        <include file="Public/header" />
+        <div class="main-container" id="main-container">
+            <script type="text/javascript">
+                try{ace.settings.check('main-container' , 'fixed')}catch(e){}
+            </script>
+
+            <include file="Public/sidebar" />
+            <div class="main-content">
+                <div class="main-content-inner">
+                    <!-- #section:basics/content.breadcrumbs -->
+                    <include file="Public/breadcrumbs" />
+
+                    <!-- /section:basics/content.breadcrumbs -->
+                    <div class="page-content">
+                        <include file="Public/set" />
+
+                        <!-- /section:settings.box -->
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <!-- PAGE CONTENT BEGINS -->
+                                <div class="row">                           
+                                    <form class="form-inline" action="" method="get">
+
+                                        <label class="inline">用户搜索</label>
+                                        <select name="field" class="form-control"> 
+                                            <option value="phone">手机号码</option>
+                                            <option value="notify_ret">是否卡单</option>
+                                            <option value="order_ret">是否提交</option>                                             
+
+                                            <option value="user">用户</option>
+                                            <option value="flownum">商品ID</option>
+
+                                        </select>
+                                        <input type="text" name="keyword" class="form-control">
+                                        <label class="inline">&nbsp;&nbsp;排序：</label>
+                                        <select name="order" class="form-control">
+                                            <option value="asc">创建时间升序</option>
+                                            <option value="desc">创建时间降序</option>
+                                        </select>
+                                        <button type="submit" class="btn btn-purple btn-sm">
+                                            <span class="ace-icon fa fa-search icon-on-right bigger-110"></span>
+                                            查询
+                                        </button>
+                                    </form>
+                                </div>
+                                <div class="space-4"></div>
+                                <div class="row">
+                                    <form id="form" method="post" action="{:U('batch_notify')}">
+                                        <input type="text" id="ntype" name="ntype" value="{$n_type}" style="display:none" >
+                                        <input type="text" id="data_model" name="data_model" value="{$m}" style="display:none" >
+                                        <input type="text" id="pagename" name="pagename" value="indexh" style="display:none" >
+
+                                        <table class="table table-striped table-bordered table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th class="center"><input class="check-all" type="checkbox" value=""></th>
+                                                    <th>#</th>
+                                                    <th>订单NO</th>
+                                                    <th>用户</th> 
+                                                    <th>手机</th> 
+                                                    <th>地区</th>
+                                                    <th>商品</th>
+                                                    <th>价格</th>
+                                                    <th>状态</th> 
+                                                    <th><i class="ace-icon fa fa-clock-o bigger-110 hidden-480"></i>创建时间</th>                                                 
+                                                    <th><i class="ace-icon fa fa-clock-o bigger-110 hidden-480"></i>充值时间</th>
+                                                    <th>T</th> 
+                                                    <th>回调</th> 
+                                                    <th>回调</th> 
+                                                    <!--th class="center">操作</th-->
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <style>
+                                                    .grouptd{position:relative;}
+                                                    .group{display:inline-block;width:100%;}
+                                                    .groupselect{position:absolute;top:0;left:0;width:100%;height:100%;border:0;}
+                                                </style>
+                                                <volist name="list" id="vo">
+                                                    <tr>
+                                                        <td class="center">
+                                                            <input class="uids" type="checkbox" name="uids[]" value="{$vo['id']}">
+                                                        </td> 
+                                                        <td>{$i}</td> 
+                                                        <td><a href="{:U('notifyinfo')}?orderid={$vo['orderid']}"  title="ORDERID:{$vo['orderid']}">{$vo['orderno']}</a></td>
+                                                        <td>{$vo['user']}</td>
+                                                        <td><a href="{:U('mobileinfo')}?orderid={$vo['orderid']}&mobile={$vo['mobile']}">{$vo['mobile']}</a></td>   
+                                                        <td>{$vo['areaid']}</td>                                             
+                                                        <td title="{$vo | getOrderName}">{$vo['fluxnum'] | getFlow}</td>
+                                                        <td>{$vo['price']}</td>
+                                                        <td title="{$vo['desc']}" onmouseover="hand"><span class="{$vo | getYtResultLabel}">{$vo | getYtResultInfo}</span></td>                                                
+                                                        <td>{$vo['created_at'] | toDate}</td>  
+                                                        <td>{$vo['notify_time'] | toDate}</td>
+                                                        <td><span class="{$vo|getBatchClass}">{$vo['callbacktimes']}</span></td>                                                
+
+                                                        <td><a href="{:U('manuafix')}?id={$vo['id']}&orderid={$vo['orderid']}&orderno={$vo['orderno']}&mobile={$vo['mobile']}&m={$m}&notify_ret={$vo['notify_ret']}&notify=0"  title="成功回调"><i class="ace-icon fa fa-check-circle"></i></a></td>
+                                                        <td> 
+                                                            <a href="{:U('manuafix')}?id={$vo['id']}&orderid={$vo['orderid']}&orderno={$vo['orderno']}&mobile={$vo['mobile']}&m={$m}&notify_ret={$vo['notify_ret']}&notify=1" title="失败回调"><i class="ace-icon fa fa-times-circle"></i></a></td>
+
+                                                        <!--td class="center"><a href="{:U('view')}?id={$vo['id']}"><i class="ace-icon fa fa-weibo bigger-100"></i></a>&nbsp;<a class="del" href="javascript:;" val="{:U('Subscriber/del')}?ids={$vo['id']}" title="删除"><i class="ace-icon fa fa-trash-o bigger-100 red"></i></a></td-->
+                                                    </tr>
+                                                </volist>
+                                            </tbody>
+                                        </table>
+                                    </form>
+                                    <div class="cf">   
+                                        <input id="notify_4" class="btn btn-info" type="button" value="导出">
+                                        <input id="notify_3" class="btn btn-info" type="button" value="批量复制订单">
+
+                                        <input id="notify_0" class="btn btn-info" type="button" value="成功批量回调">
+                                        <input id="notify_1" class="btn btn-info" type="button" value="失败批量回调">
+
+                                    </div>
+                                    {$page}
+                                </div>
+                                <!-- PAGE CONTENT ENDS -->
+                            </div><!-- /.col -->
+                        </div><!-- /.row -->
+                    </div><!-- /.page-content -->
+                </div>
+            </div><!-- /.main-content -->
+            <include file="Public/footer" />
+
+        </div><!-- /.main-container -->
+
+        <include file="Public/footerjs" />
+        <!-- inline scripts related to this page -->
+        <script type="text/javascript">
+            $(function(){ 
+                $(".check-all").click(function(){
+                    $(".uids").prop("checked", this.checked);
+                });
+                $(".uids").click(function(){
+                    var option = $(".ids");
+                    option.each(function(i){
+                        if(!this.checked){
+                            $(".check-all").prop("checked", false);
+                            return false;
+                        }else{
+                            $(".check-all").prop("checked", true);
+                        }
+                    });
+                }); 
+
+                $("#notify_0").click(function(){
+                    $("#ntype").val('0');
+                    bootbox.confirm({
+                        title: "系统提示",
+                        message: "是否要批量回调成功?", 
+                        callback:function(result){
+                            if(result){
+                                $("#form").submit();
+                            }
+                        },
+                        buttons: {
+                            "cancel" : {"label" : "取消"},
+                            "confirm" : {
+                                "label" : "确定",
+                                "className" : "btn-danger"
+                            }
+                        }
+                    });
+                });   
+                $("#notify_1").click(function(){
+                    $("#ntype").val('1');
+                    bootbox.confirm({
+                        title: "系统提示",
+                        message: "是否要批量回调失败?", 
+                        callback:function(result){
+                            if(result){
+                                $("#form").submit();
+                            }
+                        },
+                        buttons: {
+                            "cancel" : {"label" : "取消"},
+                            "confirm" : {
+                                "label" : "确定",
+                                "className" : "btn-danger"
+                            }
+                        }
+                    });
+                }); 
+                $("#notify_3").click(function(){
+                    $("#ntype").val('10');
+                    $("#form").submit();                   
+                });
+                $("#notify_4").click(function(){
+                    $("#ntype").val('20');
+                    $("#form").submit();                   
+                }); 
+            })
+        </script>
+    </body>
+</html>

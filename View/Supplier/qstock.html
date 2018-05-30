@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+        <meta charset="utf-8" />
+        <title>{$current['title']}-{$Think.CONFIG.title} </title>
+
+        <meta name="keywords" content="{$Think.CONFIG.keywords}" />
+        <meta name="description" content="{$Think.CONFIG.description}" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+
+        <include file="Public/head" />
+        <style>
+            .footReturn{margin:10px 10px}
+            .footFix{width:100%;text-align:center;position:fixed;left:0;bottom:0;z-index:99;}
+            #footReturn a, #footReturn2 a {
+                display: block;
+                line-height: 41px;
+                color: #fff;
+                text-shadow: 1px 1px #282828;
+                font-size: 14px;
+                font-weight: bold;
+            }
+            #footReturn, #footReturn2 {
+                z-index: 89;
+                display: inline-block;
+                text-align: center;
+                text-decoration: none;
+                vertical-align: middle;
+                cursor: pointer;
+                width: 100%;
+                outline: 0 none;
+                overflow: visible;
+                Unknown property name.-moz-box-sizing: border-box;
+                box-sizing: border-box;
+                padding: 0;
+                height: 41px;
+                opacity: .95;
+                border-top: 1px solid #181818;
+                box-shadow: inset 0 1px 2px #b6b6b6;
+                background-color: #515151;
+                Invalid property value.background-image: -ms-linear-gradient(top,#838383,#202020);
+                background-image: -webkit-linear-gradient(top,#838383,#202020);
+                Invalid property value.background-image: -moz-linear-gradient(top,#838383,#202020);
+                Invalid property value.background-image: -o-linear-gradient(top,#838383,#202020);
+                background-image: -webkit-gradient(linear,0% 0,0% 100%,from(#838383),to(#202020));
+                Invalid property value.filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr='#838383',endColorstr='#202020');
+                Unknown property name.-ms-filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr='#838383',endColorstr='#202020');
+            }
+
+            dl {
+                margin:0; 
+                padding:0 0 15px 0; 
+                width:301px; 
+                height:auto; 
+                background:#fff url(/jscss/demoimg/200904/bar3.gif) bottom left no-repeat;
+            }
+
+            dt {
+                text-align:center; 
+                font-size:12px; 
+                border-bottom:3px solid #fff;
+            }
+
+            dd {
+                margin:0; 
+                display:block; 
+                width:300px; 
+                height:2em; 
+                background:#E0E0E0; 
+                border-bottom:1px solid #fff;
+                font-size:12px; 
+            }
+
+            dk {
+                margin:0; 
+                display:block; 
+                width:300px; 
+               
+                font-size:12px; 
+            }
+            
+            dd b {
+                float:right;
+                display:block; 
+                margin-left:auto; 
+                background:#CCEEFF ; 
+                height:2em; 
+                line-height:2em; 
+                text-align:right;
+                font-size:12px; 
+            } 
+            dd.p0 b {width:100%;}
+            dd.p0.1 b {width:0.01%;}
+            dd.p3 b {width:98%;}
+            dd.p5 b {width:95%;}  
+            dd.p10 b {width:90%;}
+            dd.p15 b {width:85%;}
+            dd.p20 b {width:80%;}
+            dd.p25 b {width:75%;}
+            dd.p30 b {width:70%;}
+            dd.p35 b {width:65%;}  
+            dd.p40 b {width:60%;}
+            dd.p45 b {width:55%;}  
+            dd.p50 b {width:50%;}
+            dd.p55 b {width:45%;}  
+            dd.p60 b {width:40%;}
+            dd.p65 b {width:35%;}  
+            dd.p70 b {width:30%;}
+            dd.p75 b {width:25%;}  
+            dd.p80 b {width:20%;}
+            dd.p85 b {width:15%;}  
+            dd.p90 b {width:10%;}
+            dd.p95 b {width:5%;} 
+            dd.p100 b {width:0%;}
+        </style>
+    </head>
+
+    <body class="no-skin">
+        <include file="Public/header" />
+        <div class="main-container" id="main-container">
+            <script type="text/javascript">
+                try{ace.settings.check('main-container' , 'fixed')}catch(e){}
+            </script>
+
+            <include file="Public/sidebar" />
+            <div class="main-content">
+                <div class="main-content-inner">
+                    <!-- #section:basics/content.breadcrumbs -->
+                    <include file="Public/breadcrumbs" />
+
+                    <!-- /section:basics/content.breadcrumbs -->
+                    <div class="page-content">
+                        <include file="Public/set" />
+
+                        <!-- /section:settings.box -->
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <!-- PAGE CONTENT BEGINS -->
+                                                            <div class="space-4"></div>
+                                <div class="row">
+                                    <form id="form" method="post" action="{:U('del')}">
+                                        <table class="table table-striped table-bordered table-hover">
+                                        <?php foreach ($info as $key=>$vo){?>
+            <?php foreach ($vo->items as $keyi=>$voi){?>
+            <ul class="round"> 
+            <li>
+                <table width="100%" border="0" cellspacing="0" cellpadding="0" class="kuang">
+                    <tr>       
+                    <td>
+                       <dl>
+                           <dt>0000</dt> 
+                    <dd class="p<?php echo getTaocanShow($voi->cumulationAlready."/".$voi->cumulationTotal) ?>"><b>
+                        </b></dd>
+                    <dk>已用:{weixin:$voi->cumulationAlready}&nbsp;{weixin:$voi->unitName} &nbsp;&nbsp; &nbsp;&nbsp;     剩余:{weixin:$voi->cumulationLeft}&nbsp;{weixin:$voi->unitName}</dk>
+                </dl>
+                    </td>
+                    </tr>
+                </table>
+            </li>
+               
+
+            </ul>
+              <?php }?>
+            <?php }?>
+                                        </table>
+                                    </form>
+                                    <div class="cf">
+                                    </div>
+                                    {$page}
+                                </div>
+                                <!-- PAGE CONTENT ENDS -->
+                            </div><!-- /.col -->
+                        </div><!-- /.row -->
+                    </div><!-- /.page-content -->
+                </div>
+            </div><!-- /.main-content -->
+            <include file="Public/footer" />
+
+        </div><!-- /.main-container -->
+
+        <include file="Public/footerjs" />
+        <!-- inline scripts related to this page -->
+        <script type="text/javascript">
+            $(function(){
+                $(".group").click(function(){
+                    $(this).addClass('hide');
+                    $(this).parent().find(".groupselect").removeClass('hide');
+                })
+                $(".groupselect").on("change",function(){
+                    var ob = $(this);
+                    var gid=ob.val();
+                    var uid = ob.parent().find('.group').attr('val');
+                    $.get("{:U('update')}?ajax=yes&uid="+uid+"&gid="+gid,function(data){
+                        var text = ob.find("option:selected").text();
+                        ob.parent().find(".group").removeClass('hide').html(text);
+                        ob.addClass('hide');
+                    });
+                })
+
+                $(".check-all").click(function(){
+                    $(".uids").prop("checked", this.checked);
+                });
+                $(".uids").click(function(){
+                    var option = $(".ids");
+                    option.each(function(i){
+                        if(!this.checked){
+                            $(".check-all").prop("checked", false);
+                            return false;
+                        }else{
+                            $(".check-all").prop("checked", true);
+                        }
+                    });
+                });
+                $("#submit").click(function(){
+                    bootbox.confirm({
+                        title: "系统提示",
+                        message: "是否要删除所选用户？", 
+                        callback:function(result){
+                            if(result){
+                                $("#form").submit();
+                            }
+                        },
+                        buttons: {
+                            "cancel" : {"label" : "取消"},
+                            "confirm" : {
+                                "label" : "确定",
+                                "className" : "btn-danger"
+                            }
+                        }
+                    });
+                });
+                $(".del").click(function(){
+                    var url = $(this).attr('val');
+                    bootbox.confirm({
+                        title: "系统提示",
+                        message: "是否要该用户?", 
+                        callback:function(result){
+                            if(result){
+                                window.location.href = url;
+                            }
+                        },
+                        buttons: {
+                            "cancel" : {"label" : "取消"},
+                            "confirm" : {
+                                "label" : "确定",
+                                "className" : "btn-danger"
+                            }
+                        }
+                    });
+                });
+            })
+        </script>
+    </body>
+</html>

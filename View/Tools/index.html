@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+        <meta charset="utf-8" />
+        <title>{$current['title']}-{$Think.CONFIG.title}</title>
+
+        <meta name="keywords" content="{$Think.CONFIG.keywords}" />
+        <meta name="description" content="{$Think.CONFIG.description}" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+
+        <include file="Public/head" />
+    </head>
+
+    <body class="no-skin">
+        <include file="Public/header" />
+        <div class="main-container" id="main-container">
+            <script type="text/javascript">
+                try{ace.settings.check('main-container' , 'fixed')}catch(e){}
+            </script>
+
+            <include file="Public/sidebar" />
+            <div class="main-content">
+                <div class="main-content-inner">
+                    <!-- #section:basics/content.breadcrumbs -->
+                    <include file="Public/breadcrumbs" />
+                    <!-- /section:basics/content.breadcrumbs -->
+                    <div class="page-content">
+                        <include file="Public/set" />
+
+                        <!-- /section:settings.box -->
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <!-- PAGE CONTENT BEGINS -->
+                                <div class="cf">
+                                    <!--a class="btn btn-info" href="{:U('add')}" value="">新增</a-->
+                                </div>
+                                <div class="space-4"></div>
+                                流量实用功能<br>
+
+
+<a href="{:U("Checkfee/rebuild",['uid'=>49,'date'=>201710])}">{:U("Checkfee/fixUnused",['uid'=>49,'date'=>201710])}  </a><br>
+    //重新生成订单<br>
+    //注意：只是重新生成，如果订单中的unused不正确，需要先执行 fixUnused<br>
+<a href="{:U("Checkfee/fixUnused",['uid'=>49,'date'=>201710])}">{:U("Checkfee/fixUnused",['uid'=>49,'date'=>201710])}  </a><br>
+
+<a href="{:U("Checkfee/rebuild",['uid'=>49,'date'=>201710])}">{:U("Checkfee/rebuild",['uid'=>49,'date'=>201710])}  </a><br>
+
+<a href="http://localhost/index.php/order/exportFund.html?uid=49&date=201710">http://localhost/index.php/order/exportFund.html?uid=49&date201710 </a><br>
+
+
+
+
+订单导出<br>
+
+<a href="{:U("Checkfee/export",['uid'=>49,'date'=>201710])}">{:U("Checkfee/export",['uid'=>49,'date'=>201710])}  </a><br>
+
+                                {$page}
+                                <!-- PAGE CONTENT ENDS -->
+                            </div><!-- /.col -->
+                        </div><!-- /.row -->
+                    </div><!-- /.page-content -->
+                </div>
+            </div><!-- /.main-content -->
+            <include file="Public/footer" />
+
+        </div><!-- /.main-container -->
+
+        <include file="Public/footerjs" />
+        <!-- inline scripts related to this page -->
+        <script type="text/javascript">
+            $(function(){
+                $(".check-all").click(function(){
+                    $(".aids").prop("checked", this.checked);
+                });
+                $(".aids").click(function(){
+                    var option = $(".ids");
+                    option.each(function(i){
+                        if(!this.checked){
+                            $(".check-all").prop("checked", false);
+                            return false;
+                        }else{
+                            $(".check-all").prop("checked", true);
+                        }
+                    });
+                });
+                $("#submit").click(function(){
+                    bootbox.confirm({
+                        title: "系统提示",
+                        message: "是否要删除所选记录？", 
+                        callback:function(result){
+                            if(result){
+                                $("#form").submit();
+                            }
+                        },
+                        buttons: {
+                            "cancel" : {"label" : "取消"},
+                            "confirm" : {
+                                "label" : "确定",
+                                "className" : "btn-danger"
+                            }
+                        }
+                    });
+                });
+                $(".del").click(function(){
+                    var url = $(this).attr('val');
+                    bootbox.confirm({
+                        title: "系统提示",
+                        message: "是否要该记录？", 
+                        callback:function(result){
+                            if(result){
+                                window.location.href = url;
+                            }
+                        },
+                        buttons: {
+                            "cancel" : {"label" : "取消"},
+                            "confirm" : {
+                                "label" : "确定",
+                                "className" : "btn-danger"
+                            }
+                        }
+                    });
+                });
+                
+                
+                
+                $("#enable_all").click(function(){
+                    $("#ntype").val('1');
+                    $("#form").submit();                   
+                });
+                 $("#disable_all").click(function(){
+                    $("#ntype").val('2');
+                    $("#form").submit();                   
+                });
+            })
+        </script>
+    </body>
+</html>

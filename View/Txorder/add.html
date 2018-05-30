@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+        <meta charset="utf-8" />
+        <title>{$current['title']}-{$Think.CONFIG.title}</title>
+
+        <meta name="keywords" content="{$Think.CONFIG.keywords}" />
+        <meta name="description" content="{$Think.CONFIG.description}" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+
+        <include file="Public/head" />
+
+        <script type="text/javascript">
+            var countdown=6; 
+            function settime(obj) {
+
+                if (countdown == 0) { 
+                    obj.removeAttribute("disabled");
+                    obj.value="提交中";
+                    countdown = 6   ; 
+                    return;
+                } else { 
+                    obj.setAttribute("disabled", true); 
+                    obj.value="重新提交("+ countdown +")"; 
+                    countdown--;
+                }
+                setTimeout(function() { 
+                    settime(obj) }
+                    ,1000)
+            } 
+            function setDisable(obj) {               
+                bj.setAttribute("disabled", true);                   
+            } 
+
+            function isMobile(str)  
+            { 
+                if(/^(1|1|1|1|1)\d{10}$/.test(str) && str.length == 11)  
+                {  
+                    return true;  
+                }  
+                return false;  
+            }  
+        </script>
+        <script src="http://libs.baidu.com/jquery/1.10.2/jquery.min.js"></script>
+    </head>
+
+    <body class="no-skin">
+        <include file="Public/header" />
+        <div class="main-container" id="main-container">
+            <script type="text/javascript">
+                try{ace.settings.check('main-container' , 'fixed')}catch(e){}
+            </script>
+
+            <include file="Public/sidebar" />
+            <div class="main-content">
+                <div class="main-content-inner">
+                    <!-- #section:basics/content.breadcrumbs -->
+                    <include file="Public/breadcrumbs" />
+
+                    <!-- /section:basics/content.breadcrumbs -->
+                    <div class="page-content">
+                        <include file="Public/set" />
+
+                        <!-- /section:settings.box -->
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <!-- PAGE CONTENT BEGINS -->
+                                <form class="form-horizontal" action="" method="post">
+                                    <div class="form-group">
+                                        <label class="col-sm-1 control-label no-padding-right" for="form-field-1"> 用户姓名 </label>
+                                        <div class="col-sm-9">
+                                            <input type="text" name="user" id="user" class="rcol-xs-10 col-sm-5" value="">
+                                            <span class="help-inline col-xs-12 col-sm-7">
+                                                <span class="middle"></span>
+                                            </span>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="space-4"></div>
+
+                                    <div class="form-group">
+                                        <label class="col-sm-1 control-label no-padding-right" for="form-field-2"> 手机号码 </label>
+                                        <div class="col-sm-9">
+                                            <input type="text" name="data[mobile]" id="mobile" placeholder="手机号码" class="col-xs-10 col-sm-5" value="18013829399" required>
+                                            <span class="help-inline col-xs-12 col-sm-7">
+                                                <span class="middle">不能为空</span>
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                    <div class="space-4"></div>
+                                    <div class="form-group">
+                                        <label class="col-sm-1 control-label no-padding-right" for="form-field-10">运营商</label>
+                                        <div class="col-sm-9">
+                                            <select id="operator" name="data[operator]" class="rcol-xs-10 col-sm-5" required readonly="true">
+                                                <option value="">----请选择运营商----</option>
+                                                <option value="1" selected>中国移动</option>
+                                                <option value="2" >中国联通</option>
+                                                <option value="3" >中国电信</option>
+                                            </select>
+
+                                        </div>
+                                    </div>
+                                    <div class="space-4"></div>
+                                    <div class="form-group">
+                                        <label class="col-sm-1 control-label no-padding-right" for="form-field-10">省份</label>
+                                        <div class="col-sm-9">
+                                            <select id="areacode" name="data[areacode]" class="rcol-xs-10 col-sm-5" required readonly="true">
+                                                <option value="">----请选择省份----</option>
+                                                <option value="025" selected>江苏</option>                                            
+                                            </select>
+
+                                        </div>
+                                    </div>
+                                    <div class="space-4"></div>
+                                    <div class="form-group">
+                                        <label class="col-sm-1 control-label no-padding-right" for="form-field-10">流量类型</label>
+                                        <div class="col-sm-9">
+                                            <select id="scope" name="data[scope]" class="rcol-xs-10 col-sm-5" readonly>
+                                                <option value="">----请选择类型----</option>
+                                                <option value="1" selected>全国</option>                                            
+                                                <option value="2">省内</option>                                            
+                                            </select>
+
+                                        </div>
+                                    </div>
+
+                                    <div class="space-4"></div>
+                                    <div class="form-group">
+                                        <label class="col-sm-1 control-label no-padding-right" for="form-field-10">{$cc} 流量 </label>
+                                        <div class="col-sm-9">
+                                            <select id="fluxnum" name="data[fluxnum]" class="rcol-xs-10 col-sm-5" required>
+                                                <option value="">----请选择流量包----</option>   
+                                                <volist name="fluxgroup" id="val">
+                                                    <option value="{$val['fluxnum']}">{$val['desc']}</option>
+                                                </volist>
+
+                                            </select>
+                                            <span class="help-inline col-xs-12 col-sm-7">
+                                                <span class="middle">请慎重选择流量包</span>
+                                            </span>
+                                        </div>
+                                    </div>                               
+                                    <div class="space-4"></div>                                     
+                                    <div class="form-group">
+                                        <label class="col-sm-1 control-label no-padding-right" for="form-field-10">生效时间</label>
+                                        <div class="col-sm-9">
+                                            <select id="activeflag" name="data[activeflag]" class="rcol-xs-10 col-sm-5" required>
+                                                <option value="">----请选择流量生效时间----</option>
+                                                <option value="0" selected>当月</option>                                            
+                                                <option value="1">下月</option>                                            
+                                            </select>
+
+                                        </div>
+                                    </div>
+                                    <div class="space-4"></div>                                     
+                                    <div class="form-group">
+                                        <label class="col-sm-1 control-label no-padding-right" for="form-field-10">有效期</label>
+                                        <div class="col-sm-9">
+                                            <select id="expiration" name="data[expiration]" class="rcol-xs-10 col-sm-5" required>
+                                                <option value="">----请选择流量有效期----</option>
+                                                <option value="1" selected>1个月</option>                                            
+                                                <option value="3" >季包</option>   
+                                                <option value="6" >半年包</option>   
+                                                <option value="12" >年包</option>                                      
+                                            </select>
+
+                                        </div>
+                                    </div>                            
+                                    <div class="space-4"></div>
+                                   
+                                    <div style="display: none; font: 200;" id="apptc" > </div>
+                                    <div class="col-md-offset-2 col-md-9">
+                                        <button class="btn btn-info" type="button" id="btn" >
+                                            <i class="icon-ok bigger-110"></i>
+                                            提交
+                                        </button>
+
+                                        &nbsp; &nbsp; &nbsp;
+                                        <button class="btn" type="reset">
+                                            <i class="icon-undo bigger-110"></i>
+                                            重置
+                                        </button>
+                                    </div>
+                                </form>
+                                <!-- PAGE CONTENT ENDS -->
+                            </div><!-- /.col -->
+                        </div><!-- /.row -->
+                    </div><!-- /.page-content -->
+                </div>
+            </div><!-- /.main-content -->
+            <include file="Public/footer" />
+
+        </div><!-- /.main-container -->
+
+        <include file="Public/footerjs" />
+        <!-- inline scripts related to this page -->
+        <script src="__PUBLIC__/qwadmin/js/date-time/bootstrap-datepicker.js"></script>
+
+    </body>
+    <SCRIPT type=text/javascript>
+
+        $(function(){
+            $("#btn").click(function(){           
+                var mobile = $.trim($('#mobile').val());
+                 var fluxnum = $.trim($('#fluxnum').val());
+
+                if(!isMobile(mobile)){
+                    $('#apptc').html("请输入正确的手机号码");
+                    $('#apptc').css('display','block');
+                    return;
+                }
+                if(fluxnum == ""){
+                    $('#apptc').html("请选择流量大小");
+                    $('#apptc').css('display','block');
+                    return;
+                }
+
+                push_start(mobile);    
+                settime(this);
+            });
+        });
+
+        function sendPush(url, vars, callback) { 
+            return $.ajax({
+                type : "POST",
+                url : url,
+                data : vars + "&ajax=1",
+                dataType : "json",
+                success : callback
+            });
+        }
+
+        function  push_start(val) {  
+            var post_url = "{:U('insert')}";   
+
+            var user = $.trim($('#user').val());
+            var mobile = $.trim($('#mobile').val());
+            var operator = $.trim($('#operator').val());
+            var areacode = $.trim($('#areacode').val());
+            var scope = $.trim($('#scope').val());
+            var fluxnum = $.trim($('#fluxnum').val());
+            var activeflag = $.trim($('#activeflag').val());
+            var expiration = $.trim($('#expiration').val());
+            //var fluxid = $.trim($('#fluxid').val());
+
+            //var d= {data:{user:user, mobile:mobile, operator:operator, areacode:areacode, scope:scope, fluxnum:fluxnum, activeflag:activeflag, expiration:expiration}};
+            var v=  "mobile=" + mobile + "&operator=" + operator + "&areacode" + "&scope=" + scope + "&fluxnum=" + fluxnum + "&activeflag="+activeflag + "&expiration=" + expiration;
+
+            //alert(v) ;
+            $('#apptc').html('订单提交中,请稍候...');    
+            sendPush(post_url, v, function(data) {
+                //alert(data['header']['errcode']);
+                if (data['header']['errcode'] != 0) {
+                    $('#apptc').html("对不起! 您的订单提交失败,失败原因: " + data['header']['errmsg']+ "(" + data['header']['errcode'] + ")");
+                    $('#apptc').css('display','block'); 
+                } else {
+                    //以下测试用，后续要删除的                     
+                    $('#apptc').html('订单提交成功,后台充值成功后自动通知!');
+                    $('#apptc').css('display','block'); 
+                    //setDisable(this);
+                } 
+            });
+        }          
+
+    </SCRIPT>
+</html>

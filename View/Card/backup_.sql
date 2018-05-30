@@ -1,0 +1,1 @@
+/opt/lampp/bin/mysqldump -uroot -pU_njwk_0515 llfx  qw_member qw_fxs_fee qw_setting qw_goods_channel_km_price qw_goods_channel_price qw_goods_channel_rk_price qw_goods_channel_user_price  qw_mobile_area qw_mobile_channel qw_mobile_segment qw_msg_inbox qw_msg_sentbox   | gzip > /home/mysqldata/llfx_setting_`date +%Y-%m-%d_%H%M%S`.sql.gz
