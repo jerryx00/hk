@@ -138,7 +138,9 @@ class McardController extends BasehlyController {
 		$d['created_at'] = $retList['Datetime'];
 		$d['updated_at'] = $retList['Datetime'];
 		$d['returncode'] = $retList['ReturnCode'];
-		$d['returnmessage'] = $retList['ReturnMessage'];
+        $d['returnmessage'] = $retList['ReturnMessage'];
+		$d['uid'] = session('user.uid');
+        
 		//此处需要 改进，如果锁号失败，则要看本地库中是否是由该 用户锁定，且在有效期内
 		$filter['idcard'] = ['eq', $d['idcard']];
 		$filter['telnum'] = ['eq', $d['telnum']];
@@ -291,7 +293,7 @@ class McardController extends BasehlyController {
 		$hlydelivery_t['uid'] = $lockid;
 		$hlydelivery_t['remark'] = $delivery['remark'];
 		$hlydelivery_t['status'] = '1';
-		$hlydelivery_t['uid'] = '1';
+		$hlydelivery_t['uid'] = session('user.uid');
 
 
 		$t = time();
@@ -332,6 +334,10 @@ class McardController extends BasehlyController {
 
 	}
 
+    /**
+    * 业务介绍
+    * 
+    */
 	public function introduce(){
 		$list = M('hlyoffer')->where(['status'=>1])->order('id')->select();
 		$this->list = $list;
@@ -372,22 +378,22 @@ class McardController extends BasehlyController {
     
     
     /**
-    * 取消订单业务逻辑，调用和力云接口
+    * 取消锁定业务逻辑，调用和力云接口
     *
     */
     public function unLockNum(){
         $d = I('info');
-        //调用和力云锁号接口
-        $retList = D('Hly','Service')->orderCancle($d);
+        //调用和力云取消锁号接口
+        $retList = D('Hly','Service')->unLockNum($d);
 
         //更新本地数据库中的订单信息
         $orderId = $d['orderId'];
         $data['ReturnCode'] = $Content['retCode'];
         $data['ReturnMessage'] = $Content['retMsg'];
         $data['Datetime'] = $xml['Datetime'];
+        
         $this->list = $list;
-        $this->display();
-
+        $this->display();  
     }
 
 
