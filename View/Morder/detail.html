@@ -94,12 +94,67 @@
                                     </select>
 
                                 </div>
-                            </div>                                                          
+                            </div>
+                             <div class="space-4"></div>
+                            <div class="form-group">
+                                <label class="col-sm-1 control-label no-padding-right" for="form-field-2"> 订单编号 </label>
+                                <div class="col-sm-9">
+                                    <input type="text" name="data[booking_id]" id="booking_id" placeholder="" class="col-xs-10 col-sm-5" value="{$list['booking_id']}" readonly>                                       
+                                </div>
+                            </div>
+                             
+                            <div class="space-4"></div>
+                            <div class="form-group">
+                                <label class="col-sm-1 control-label no-padding-right" for="form-field-2"> 上游订单ID </label>
+                                <div class="col-sm-9">
+                                    <input type="text" name="data[respid]" id="respid" placeholder="" class="col-xs-10 col-sm-5" value="{$list['respid']}" readonly>                                       
+                                </div>
+                            </div>
+                                  
+                            <div class="space-4"></div>
+                            <div class="form-group">
+                                <label class="col-sm-1 control-label no-padding-right" for="form-field-2"> 物流单号 </label>
+                                <div class="col-sm-9">
+                                    <input type="text" name="data[code]" id="code" placeholder="" class="col-xs-10 col-sm-5" value="{$deliver['code']}" readonly>                                       
+                                </div>
+                            </div>
+                            
+                             <div class="space-4"></div>
+                            <div class="form-group">
+                                <label class="col-sm-1 control-label no-padding-right" for="form-field-2"> 物流公司 </label>
+                                <div class="col-sm-9">
+                                    <input type="text" name="data[express]" id="express" placeholder="" class="col-xs-10 col-sm-5" value="{$deliver['express']}" readonly>                                       
+                                </div>
+                            </div>
+                            
+                              <div class="space-4"></div>
+                            <div class="form-group">
+                                <label class="col-sm-1 control-label no-padding-right" for="form-field-2"> 物流详情 </label>
+                                <div class="col-sm-9">
+                                    <input type="text" name="data[expinfo]" id="expinfo" placeholder="" class="col-xs-10 col-sm-5" value="{$deliver['expinfo']}" readonly>                                       
+                                </div>
+                            </div>
+                            
+                              <div class="space-4"></div>
+                            <div class="form-group">
+                                <label class="col-sm-1 control-label no-padding-right" for="form-field-2"> 物流状态 </label>
+                                <div class="col-sm-9">
+                                    <input type="text" name="data[expstatus]" id="expstatus" placeholder="" class="col-xs-10 col-sm-5" value="{$deliver['expstatus']}" readonly>                                       
+                                </div>
+                            </div>
+                             
+                             <div class="form-group">
+                                <label class="col-sm-1 control-label no-padding-right" for="form-field-2"> 订单状态 </label>
+                                <div class="col-sm-9">
+                                    <input type="text" name="data[statusmsg]" id="statusmsg" placeholder="" class="col-xs-10 col-sm-5" value="{$deliver['statusmsg']}" readonly>                                       
+                                </div>
+                            </div>
+                                                                              
                             <div class="space-4"></div>
                             <div class="form-group">
                                 <label class="col-sm-1 control-label no-padding-right" for="form-field-2"> 收货人电话 </label>
                                 <div class="col-sm-9">
-                                    <input type="text" name="data[delivery_phone]" id="delivery_phone" placeholder="收货人联系电话" class="col-xs-10 col-sm-5" value="{$list['delivery_phone']}" readonly>                                       
+                                    <input type="text" name="data[delivery_phone]" id="delivery_phone" placeholder="" class="col-xs-10 col-sm-5" value="{$list['delivery_phone']}" readonly>                                       
                                 </div>
                             </div>
 
@@ -107,7 +162,7 @@
                             <div class="form-group">
                                 <label class="col-sm-1 control-label no-padding-right" for="form-field-2"> 收货人姓名 </label>
                                 <div class="col-sm-9">
-                                    <input type="text" name="data[delivery_name]" id="delivery_name" placeholder="收货人姓名" class="col-xs-10 col-sm-5" value="{$list['delivery_name']}" readonly>                                       
+                                    <input type="text" name="data[delivery_name]" id="delivery_name" placeholder="" class="col-xs-10 col-sm-5" value="{$list['delivery_name']}" readonly>                                       
                                 </div>
                             </div>
 
@@ -115,7 +170,7 @@
                             <div class="form-group">
                                 <label class="col-sm-1 control-label no-padding-right" for="form-field-2"> 收货时间段 </label>
                                 <div class="col-sm-9">
-                                    <input type="text" name="data[delivery_period]" id="period" placeholder="客户收货时间段" class="col-xs-10 col-sm-5" value="{$list['delivery_addr']}" readonly>                                       
+                                    <input type="text" name="data[delivery_period]" id="period" placeholder="" class="col-xs-10 col-sm-5" value="{$list['delivery_addr']}" readonly>                                       
                                 </div>
                             </div>
 
@@ -123,14 +178,14 @@
                             <div class="form-group">
                                 <label class="col-sm-1 control-label no-padding-right" for="form-field-2"> 寄送地址 </label>
                                 <div class="col-sm-9">
-                                    <input type="text" name="data[delivery_addr]" id="delivery_addr" placeholder="寄送地址" class="col-xs-10 col-sm-5" value="{$list['delivery_addr']}" readonly>                                       
+                                    <input type="text" name="data[delivery_addr]" id="delivery_addr" placeholder="" class="col-xs-10 col-sm-5" value="{$list['delivery_addr']}" readonly>                                       
                                 </div>
                             </div>
                             <div class="space-4"></div>
                             <div class="form-group">
                                 <label class="col-sm-1 control-label no-padding-right" for="form-field-2"> 留言 </label>
                                 <div class="col-sm-9">
-                                    <input type="text" name="data[remark]" id="remark" placeholder="留言" class="col-xs-10 col-sm-5" value="{$list['remark']}" readonly>                                       
+                                    <input type="text" name="data[remark]" id="remark" placeholder="" class="col-xs-10 col-sm-5" value="{$list['remark']}" readonly>                                       
                                 </div>
                             </div>
 

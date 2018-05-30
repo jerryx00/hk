@@ -63,12 +63,12 @@
                                                     <th>#</th>
 
                                                     <th>用户姓名</th> 
-                                                    <th>身份证号码</th>
+                                              
                                                     <th>入网手机号码</th>
                                                     <!--th>状态</th-->
-                                                    <th>订单ID</th> 
-                                                    <th>物流ID</th> 
+                                                    <th>订单编号</th>                                                     
                                                     <th>上游ID</th> 
+                                                    <th>物流ID</th>
                                                     <th>创建时间</th> 
                                                     <th>操作</th> 
                                                 </tr>
@@ -86,16 +86,16 @@
                                                         </td> 
                                                         <td>{$i}</td> 
                                                         <td>{$vo['username']}</td>
-                                                        <td>{$vo['idcard']}</td>
+                                                     
                                                         <td>{$vo['acc_nbr']}</td>
-                                                        <td>{$vo['booking_id']}</td>                                                
-                                                        <td>{$vo['deliveryid']}</td>
+                                                        <td>{$vo['booking_id']}</td>                                                                                                        
                                                         <td>{$vo['respid']}</td>
+                                                        <td>{$vo['code']}</td>
                                                         <td>{$vo['created_at'] | toDate}</td>
                                                         <td class="left">
-                                                        <a href="{:U('Morder/detail')}?booking_id={$vo['booking_id']}&idcard={$vo['idcard']}&mobile={$vo['acc_nbr']}&authStatus=1">订单明细</a>&nbsp;&nbsp;&nbsp;
-                                                        <a href="{:U('Morder/cancelOrder')}?booking_id={$vo['booking_id']}&idcard={$vo['idcard']}&mobile={$vo['acc_nbr']}&authStatus=1">取消订单</a> &nbsp;&nbsp;&nbsp;
-                                                        <a href="{:U('Morder/query')}?booking_id={$vo['booking_id']}&idcard={$vo['idcard']}&mobile={$vo['acc_nbr']}&authStatus=1">核查订单</a>
+                                                        <a href="{:U('Morder/detail')}?booking_id={$vo['booking_id']}&idcard={$vo['idcard']}&respid={$vo['respid']}&mobile={$vo['acc_nbr']}&authStatus=1">订单明细</a>&nbsp;&nbsp;&nbsp;
+                                                        <a href="{:U('Morder/cancelOrder')}?booking_id={$vo['booking_id']}&idcard={$vo['idcard']}&respid={$vo['respid']}&mobile={$vo['acc_nbr']}&authStatus=1">取消订单</a> &nbsp;&nbsp;&nbsp;
+                                                        <a href="{:U('Morder/query')}?booking_id={$vo['booking_id']}&idcard={$vo['idcard']}&respid={$vo['respid']}&mobile={$vo['acc_nbr']}&authStatus=1">核查订单</a>
                                                         </td>
                                                     </tr>
                                                 </volist>
