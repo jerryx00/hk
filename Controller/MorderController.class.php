@@ -24,9 +24,10 @@ class MorderController extends BasehlyController {
 
     public function index() {        
         //        $orderList = M('hlyorder')->where(['status'=>'1'])->order('updated_at')->select();
-        $sql = 'SELECT * FROM qw_hlyorder a, qw_hlydelivery b,qw_hlylockednum c WHERE c.id = b.uid AND c.id=a.uid AND c.STATUS=1';   
+        $sql = 'SELECT * FROM qw_hlyorder a, qw_hlydelivery b,qw_hlylockednum c WHERE c.id = b.uid AND c.id=a.uid AND c.STATUS=1 
+AND a.acc_nbr=b.acc_nbr AND a.booking_id=b.booking_id';   
         $orderList = M('hlyorder')->query($sql);
-        //            dump($orderList);exit;
+//                    dump($sql);exit;
         $this->orderList = $orderList;
         $this->display();
     }

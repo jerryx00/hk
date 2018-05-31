@@ -293,7 +293,9 @@ class McardController extends BasehlyController {
 		$hlydelivery_t['uid'] = $lockid;
 		$hlydelivery_t['remark'] = $delivery['remark'];
 		$hlydelivery_t['status'] = '1';
-		$hlydelivery_t['uid'] = session('user.uid');
+        $hlydelivery_t['booking_id'] = $booking_id;
+        $hlydelivery_t['uid'] = session('user.uid');
+		
 
 
 		$t = time();
@@ -326,6 +328,7 @@ class McardController extends BasehlyController {
 		$retList = D('Hly','Service')->order($order_info_dt,$delivery_info_dt, $biz_info_dt);
 		$retList['updated_at'] = strtotime($retList['datetime']);
 		$retList['uid'] = session('user.uid');
+        $retList['booking_id'] = $booking_id;
 
 		$ret2 = M('hlyorder')->where(['acc_nbr'=> $acc_nbr,'uid'=>$lockid,'status'=>'1'])->data($retList)->save();
 
@@ -362,17 +365,39 @@ class McardController extends BasehlyController {
 	*
 	*/
 	public function cancelOrder(){
-		$d = I('info');
+//		$d['booking_id'] = I('booking_id');         
+//        $d['mobile'] = I('mobile'); 
+
+//        $d['orderId'] = I('respid'); 
+        
+        $d = I('info');
+        
 		//调用和力云锁号接口
 		$retList = D('Hly','Service')->orderCancle($d);
 
 		//更新本地数据库中的订单信息
+        dump($d)  ;
+        dump($retList)  ;exit;
 		$orderId = $d['orderId'];
 		$data['ReturnCode'] = $Content['retCode'];
 		$data['ReturnMessage'] = $Content['retMsg'];
 		$data['Datetime'] = $xml['Datetime'];
-		$this->list = $list;
-		$this->display();
+        if ($data['ReturnCode']==0) { //撤单成功
+             $msg = "撤单成功".$data['ReturnCode'];
+//             $this->successReturn($msg,'Morder/index');
+             $this->success('登陆成功','index');
+        } else if ($data['ReturnCode']== -1) {       //订单不存在
+                $msg = "订单不存在".$data['ReturnCode']; 
+                $this->errorReturn($msg,'Morder/index');   
+        }  else if ($data['ReturnCode']== -2) {       //-2：当前状态不允许撤单
+               $msg = "当前状态不允许撤单".$data['ReturnCode'];
+               $this->errorReturn($msg,'Morder/index');  
+        }  else {
+            $msg = "未知原因".$data['ReturnCode'];
+            $this->errorReturn($msg,'Morder/index');  
+        }
+                  
+		$this->display('index');
 
 	}
     

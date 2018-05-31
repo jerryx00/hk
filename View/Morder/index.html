@@ -94,7 +94,7 @@
                                                         <td>{$vo['created_at'] | toDate}</td>
                                                         <td class="left">
                                                         <a href="{:U('Morder/detail')}?booking_id={$vo['booking_id']}&idcard={$vo['idcard']}&respid={$vo['respid']}&mobile={$vo['acc_nbr']}&authStatus=1">订单明细</a>&nbsp;&nbsp;&nbsp;
-                                                        <a href="{:U('Morder/cancelOrder')}?booking_id={$vo['booking_id']}&idcard={$vo['idcard']}&respid={$vo['respid']}&mobile={$vo['acc_nbr']}&authStatus=1">取消订单</a> &nbsp;&nbsp;&nbsp;
+                                                        <a href="{:U('Mcard/cancelOrder')}?booking_id={$vo['booking_id']}&idcard={$vo['idcard']}&respid={$vo['respid']}&mobile={$vo['acc_nbr']}&authStatus=1">取消订单</a> &nbsp;&nbsp;&nbsp;
                                                         <a href="{:U('Morder/query')}?booking_id={$vo['booking_id']}&idcard={$vo['idcard']}&respid={$vo['respid']}&mobile={$vo['acc_nbr']}&authStatus=1">核查订单</a>
                                                         </td>
                                                     </tr>

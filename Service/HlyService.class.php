@@ -390,6 +390,7 @@ class HlyService  extends HlyCommonService{
         $paras = xml_encode($xmldata, 'Request');
 
         list($result, $returnContent) = http_post_hly($url, $paras, $token, $sign);
+        \Think\Log::record('orderCancle result ==> '.$result);
 
         $data = [];
         if ($result == '200'){
@@ -399,6 +400,12 @@ class HlyService  extends HlyCommonService{
             $data['ReturnMessage'] = $Content['retMsg'];
             $data['Datetime'] = $xml['Datetime'];
         }
+        dump($url);
+        dump($paras);
+        dump($ret);
+        dump($returnContent);
+        dump($data);exit;
+        
         return $data;
 
     }
@@ -434,14 +441,14 @@ class HlyService  extends HlyCommonService{
         //        echo 'query url ==> '.$url."<br>";
 
         list($result, $returnContent) = http_post_hly($url, $paras, $token, $sign);
-//        if ($d['showflag'] == 1)   {
-            //dump($paras);
-//            echo "<br>" ;
-//
-//            dump($result);
-//            echo "<br>" ;
-//            dump($returnContent); 
-//        } 
+        //        if ($d['showflag'] == 1)   {
+        //dump($paras);
+        //            echo "<br>" ;
+        //
+        //            dump($result);
+        //            echo "<br>" ;
+        //            dump($returnContent); 
+        //        } 
         /**
         <Response>
         <Datetime>1516155816683</Datetime>
@@ -465,7 +472,7 @@ class HlyService  extends HlyCommonService{
             $data = $Content;
             $data['Datetime'] = $xml['Datetime'];
         }
-//        dump($data); exit;
+        //        dump($data); exit;
         \Think\Log::record('query data ==> '.$data);
         return $data;
 
