@@ -400,11 +400,6 @@ class HlyService  extends HlyCommonService{
             $data['ReturnMessage'] = $Content['retMsg'];
             $data['Datetime'] = $xml['Datetime'];
         }
-        dump($url);
-        dump($paras);
-        dump($ret);
-        dump($returnContent);
-        dump($data);exit;
         
         return $data;
 

@@ -5,3 +5,9 @@ alter table `qw_hlydelivery`
    
 alter table `qw_hlydelivery` 
    add column `booking_id` varchar(128) NULL COMMENT '订单id' after `code`;
+   
+   
+   
+日常操作
+从远程更新代码 
+git pull origin master
