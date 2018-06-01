@@ -43,11 +43,9 @@
                                                 <tr>
                                                     <th class="center"><input class="check-all" type="checkbox" value=""></th>
                                                     <th>#</th>
-                                                    <th>地市</th>                                                 
-                                                    <th>手机号码</th>
-                                                    <th>价格</th>
-                                                    <th>状态</th>
-                                                    <th>描述</th> 
+                                                    <th>商品编码</th>                                                 
+                                                    <th>商品名称</th>
+                                                    <th>商品说明</th> 
                                                     <th>操作</th>
                                                 </tr>
                                             </thead>
@@ -62,13 +60,12 @@
                                                         <td class="center">
                                                             <input class="uids" type="checkbox" name="uids[]" value="{$vo['uid']}">
                                                         </td> 
-                                                        <td>{$i}</td> 
-                                                        <td>{$region}</td>
-                                                        <td>{$vo['TelNum']}</td>
-                                                        <td>{$vo['TelPrice']}</td>
-                                                        <td>{$vo['status']}</td>                                                
-                                                        <td>{$vo['remark']}</td>
-                                                        <td class="left" title="核验身份"><a href="{:U('Identity/index')}?region={$u['region']}&offer_id={$u['offer_id']}&telnum={$vo['TelNum']}&price={$vo['TelPrice']}&idcard={$u['idcard']}"><i class="ace-icon fa fa-weibo bigger-100"></i>&nbsp;核验身份</a></td>
+                                                        <td>{$i}</td>                                 
+                                                        <td>{$vo['offer_id']}</td>
+                                                        <td>{$vo['offer_name']}</td>
+                                                        <td>{$vo['remark']}</td>                                                
+                                                        
+                                                        <td class="left" title=""></td>
                                                     </tr>
                                                 </volist>
                                             </tbody>

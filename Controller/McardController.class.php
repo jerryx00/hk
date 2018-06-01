@@ -375,18 +375,24 @@
             if (count($d) == 0 || $d == null)    {
                 $d['booking_id'] = I('booking_id');         
                 $d['telnum'] = I('telnum'); 
-                $d['orderId'] = I('respid');   
+                $d['orderId'] = I('respid');  
+                $d['idcard'] = I('idcard'); 
             }
             if ($d['orderId'] == '' || empty($d['orderId'])) {
                 $d['orderId'] = $d['respid']; 
             }
+            if ($d['telnum'] == '' || empty($d['telnum'])) {
+                $d['telnum'] = I('mobile'); 
+            }
+    
+             
 
 
             //调用和力云锁号接口
             $retList = D('Hly','Service')->orderCancle($d);
 
             //更新订单状态
-            $redata['status'] = 6;
+            $redata['hkstatus'] = 6;
             $filter['booking_id'] = $d['booking_id'];
             $filter['telnum'] = $d['telnum'];  
             $ret = M('hlydelivery')->where($filter)->data($redata)->save();  
