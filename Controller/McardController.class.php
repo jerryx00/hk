@@ -384,18 +384,14 @@
             if ($d['telnum'] == '' || empty($d['telnum'])) {
                 $d['telnum'] = I('mobile'); 
             }
-    
-             
+
+
 
 
             //调用和力云锁号接口
             $retList = D('Hly','Service')->orderCancle($d);
 
-            //更新订单状态
-            $redata['hkstatus'] = 6;
-            $filter['booking_id'] = $d['booking_id'];
-            $filter['telnum'] = $d['telnum'];  
-            $ret = M('hlydelivery')->where($filter)->data($redata)->save();  
+
             //             dump($d);
             //            dump($retList);exit;
             //            $this->ajaxReturn($data);
@@ -406,10 +402,16 @@
 
             $data['resptime'] = $retList['Datetime'];
             $data['respmsg']  = $retList['ReturnMessage'] . $data['respcode'];
-            
+
             $url = U('Morder/index');
 
-            if ($data['ReturnCode']==0) { //撤单成功              
+            if ($data['ReturnCode']==0) { //撤单成功 
+                //更新订单状态
+                $redata['hkstatus'] = 6;
+                $filter['booking_id'] = $d['booking_id'];
+                $filter['telnum'] = $d['telnum'];  
+                $ret = M('hlydelivery')->where($filter)->data($redata)->save();  
+
                 $this->success($data['respmsg'], $url);
             } else if ($data['ReturnCode']== -1) {       //订单不存在
                 $msg = $retList['ReturnCode']; 
