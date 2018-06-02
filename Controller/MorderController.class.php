@@ -74,18 +74,24 @@ AND a.acc_nbr=b.acc_nbr AND a.booking_id=b.booking_id';
         $deliver['expstatus'] = $list['deliveryexpstatus'];
         $deliver['statusmsg'] = $list['statusmsg'];
         $deliver['expinfo'] = $list['deliveryexpinfo'];
-        $deliver['status'] = $list['status'];
+        $deliver['hkstatus'] = $list['status'];
+        
+//        dump($list);  exit;
         //        }
 
-        $filter['booking_id'] = $booking_id;
+        $filter['booking_id'] = $d['booking_id'];
 
         // 0000：查询成功
         //1：订单不存在
         //其他：查询失败
 
-        if ($deliver['retcode'] == '0000')  {
+        if ($list['retcode'] == '0000')  {
             $ret = M('hlydelivery')->where($filter)->data($deliver)->save();
+            
         }
+//         dump($list);
+//         dump($deliver);
+//        dump(M('hlydelivery')->getLastSql());exit;
         $list = $this->orderDetail($d); 
         $this->list = $list;            
         $this->deliver = $deliver; 
@@ -100,7 +106,7 @@ AND a.acc_nbr=b.acc_nbr AND a.booking_id=b.booking_id';
     */
     private function orderDetail($d) {
 
-        $sql = 'SELECT * FROM qw_hlyorder a, qw_hlydelivery b,qw_hlylockednum c WHERE c.id = b.uid AND c.id=a.uid AND c.STATUS=1 and a.booking_id='.$d['booking_id'];   
+        $sql = 'SELECT * FROM qw_hlyorder a, qw_hlydelivery b,qw_hlylockednum c WHERE c.id = b.uid AND c.id=a.uid AND c.STATUS=1 AND a.booking_id = b.booking_id AND a.booking_id='.$d['booking_id'];   
 
         $orderList = M('hlyorder')->query($sql);
 
@@ -109,6 +115,9 @@ AND a.acc_nbr=b.acc_nbr AND a.booking_id=b.booking_id';
         }  else {
             $list = $orderList;
         }
+        
+//        dump($orderList);
+//        dump(M('hlyorder')->getLastSql());exit;
         return $list;
     }
 
