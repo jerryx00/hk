@@ -68,7 +68,7 @@
                                                     <th>地市</th>                                                 
                                                     <th>手机号码</th>                                                    
                                                     <th>用户姓名</th> 
-                                                    <th>价格</th>                                                   
+                                                    <th>商品名称</th>                                                   
                                                     <th>锁定时间</th>
                                                     <th>状态</th>
                                                     <th>操作</th>
@@ -89,7 +89,7 @@
                                                         <td>{$vo['region']}</td>
                                                         <td>{$vo['telnum']}</td>
                                                         <td>{$vo['idcard']}</td>
-                                                        <td>{$vo['price']}</td>                                                        
+                                                        <td>{$vo['offer_name']}</td>                                                        
                                                         <td>{$vo['updated_at'] | toDate}</td>
                                                         <td>已锁定</td>   
                                                         <td class="left" title="下订单"><a href="{:U('add')}?region={$vo['region']}&telnum={$vo['telnum']}&price={$vo['price']}&idcard={$vo['idcard']}"><i class="ace-icon fa fa-weibo bigger-100"></i>&nbsp;下订单</a></td>

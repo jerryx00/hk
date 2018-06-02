@@ -135,8 +135,11 @@
 
             //锁定成功，写入锁号表
             $d['idcard'] = I('idcard');
-            $d['created_at'] = $retList['Datetime'];
-            $d['updated_at'] = $retList['Datetime'];
+            //            $d['created_at'] = $retList['Datetime'];
+            //            $d['updated_at'] = $retList['Datetime'];
+            $t = time(); 
+            $d['created_at'] = $t;
+            $d['updated_at'] = $t;
             $d['returncode'] = $retList['ReturnCode'];
             $d['returnmessage'] = $retList['ReturnMessage'];
             $d['uid'] = session('user.uid');
@@ -204,7 +207,12 @@
         *
         */
         public function lockmobile() {
-            $list = M('hlylockednum')->where($filter)->select();
+
+            if (session('user.uid') > C('HK_ADMIN')) {
+                $w = ' and a.uid = '.session('user.uid');
+            }
+            $sql = 'select * from qw_hlylockednum a,qw_hlyoffer b where a.offer_id=b.offer_id' .$w;
+            $list = M('hlylockednum')->query($sql);
             $this->list = $list;
             $this->display();
         }
