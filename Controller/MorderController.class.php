@@ -22,12 +22,26 @@ use Org\Util\ArrayHelper;
 */
 class MorderController extends BasehlyController {
 
-    public function index() {        
+    public function index() { 
+        $f = I('info');
+        if ($f['username'] != "") {
+            $fw = $fw." and a.username like '%".$f['username']."%'";
+        }
+        if ($f['idcard'] != "") {
+            $fw = $fw." and a.idcard like '%".$f['idcard']."%'";
+        }
+        if ($f['mobile'] != "") {
+            $fw = $fw." and a.telnum like '%".$f['mobile']."%'";
+        }
+
+        if (session('user.uid') > C('HK_ADMIN')) {
+            $fw = $fw. ' and a.uid = '.session('user.uid');
+        }
         //        $orderList = M('hlyorder')->where(['status'=>'1'])->order('updated_at')->select();
-        $sql = 'SELECT * FROM qw_hlyorder a, qw_hlydelivery b,qw_hlylockednum c WHERE c.id = b.uid AND c.id=a.uid AND c.STATUS=1 
-AND a.acc_nbr=b.acc_nbr AND a.booking_id=b.booking_id';   
+        $sql = 'SELECT * FROM qw_hlyorder d, qw_hlydelivery b,qw_hlylockednum a WHERE a.telnum=b.acc_nbr
+        AND d.acc_nbr=b.acc_nbr AND d.booking_id=b.booking_id '.$fw;   
         $orderList = M('hlyorder')->query($sql);
-//                    dump($sql);exit;
+//                            dump($sql);exit;
         $this->orderList = $orderList;
         $this->display();
     }
@@ -75,8 +89,8 @@ AND a.acc_nbr=b.acc_nbr AND a.booking_id=b.booking_id';
         $deliver['statusmsg'] = $list['statusmsg'];
         $deliver['expinfo'] = $list['deliveryexpinfo'];
         $deliver['hkstatus'] = $list['status'];
-        
-//        dump($list);  exit;
+
+        //        dump($list);  exit;
         //        }
 
         $filter['booking_id'] = $d['booking_id'];
@@ -87,11 +101,11 @@ AND a.acc_nbr=b.acc_nbr AND a.booking_id=b.booking_id';
 
         if ($list['retcode'] == '0000')  {
             $ret = M('hlydelivery')->where($filter)->data($deliver)->save();
-            
+
         }
-//         dump($list);
-//         dump($deliver);
-//        dump(M('hlydelivery')->getLastSql());exit;
+        //         dump($list);
+        //         dump($deliver);
+        //        dump(M('hlydelivery')->getLastSql());exit;
         $list = $this->orderDetail($d); 
         $this->list = $list;            
         $this->deliver = $deliver; 
@@ -115,9 +129,9 @@ AND a.acc_nbr=b.acc_nbr AND a.booking_id=b.booking_id';
         }  else {
             $list = $orderList;
         }
-        
-//        dump($orderList);
-//        dump(M('hlyorder')->getLastSql());exit;
+
+        //        dump($orderList);
+        //        dump(M('hlyorder')->getLastSql());exit;
         return $list;
     }
 

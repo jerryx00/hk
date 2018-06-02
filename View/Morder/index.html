@@ -34,18 +34,18 @@
                             <div class="col-xs-12">
                                 <!-- PAGE CONTENT BEGINS -->
                                 <div class="row">
-                                    <form class="form-inline" action="{:U('check')}" method="get">
+                                    <form class="form-inline" action="{:U('index')}" method="post">
 
+                                        <input type="hidden" id="authStatus" name="info[authStatus]" value="{$authStatus}">
+                                        <table class="table table-striped table-bordered table-hover">
                                         <label class="inline">用户姓名：</label>
-
-                                        <input type="text" name="username" class="form-control">
+                                        <input type="text" name="info[username]" class="form-control" value="{$u['username']}">
 
                                         <label class="inline">身份证号码：</label>
-                                        <input type="text" name="idcard" class="form-control">
+                                        <input type="text" name="info[idcard]" class="form-control" value="{$u['idcard']}">
 
-
-                                        <label class="inline">入网手机号码：</label>
-                                        <input type="text" name="mobile" class="form-control">
+                                        <label class="inline">手机号码：</label>
+                                        <input type="text" name="info[mobile]" class="form-control" value="{$u['mobile']}">
 
                                         <button type="submit" class="btn btn-purple btn-sm">
                                             <span class="ace-icon fa fa-search icon-on-right bigger-110"></span>

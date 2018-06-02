@@ -208,11 +208,21 @@
         *
         */
         public function lockmobile() {
+            $f = I('info');
+            if ($f['username'] != "") {
+                $fw = $fw." and a.username like '%".$f['username']."%'";
+            }
+            if ($f['idcard'] != "") {
+                $fw = $fw." and a.idcard like '%".$f['idcard']."%'";
+            }
+            if ($f['mobile'] != "") {
+                $fw = $fw." and a.telnum like '%".$f['mobile']."%'";
+            }
 
             if (session('user.uid') > C('HK_ADMIN')) {
-                $w = ' and a.uid = '.session('user.uid');
+                $fw = $fw. ' and a.uid = '.session('user.uid');
             }
-            $sql = 'select * from qw_hlylockednum a,qw_hlyoffer b where a.offer_id=b.offer_id' .$w;
+            $sql = 'select * from qw_hlylockednum a,qw_hlyoffer b where a.offer_id=b.offer_id' .$fw;
             $list = M('hlylockednum')->query($sql);
             $this->list = $list;
             $this->display();
