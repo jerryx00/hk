@@ -131,7 +131,8 @@
             $d['username'] = I('username');
             //调用和力云锁号接口
             $retList = D('Hly','Service')->lockNum($d);
-
+//            dump($d);
+//            dump($retList);  exit;
 
             //锁定成功，写入锁号表
             $d['idcard'] = I('idcard');
