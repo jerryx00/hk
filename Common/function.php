@@ -546,5 +546,83 @@ function getDefaultZero($str) {
     return $str;
 }
 
+//add for Hk 
+function getHkResultInfo($p) {
+    $ret = getHkResult($p);     
+    return $ret['info'];
+
+}
+
+
+function getHkResultLabel($p) {
+    $ret = getHkResult($p);     
+    return $ret['label'];
+}
+
+
+/**
+*  0：已下单
+1：已提交
+2：办理中
+3：已写卡
+4：已发货
+5：交易成功
+6：已撤单
+7：以作废
+8：未知异常
+-1其他
+
+* 
+* @param mixed $p
+*/
+function getHkResult($p) {
+    $notify_ret = $p['hkstatus'];   
+
+    if ($notify_ret == '8') {
+        //如果为255，说明刚入库，未提交上游接口  
+        $ret['info'] = '未知异常'; 
+        $ret['label'] = 'label label-sm label-warning';  //表示提交上游失败
+    } else  if ($notify_ret == '5') { 
+        $ret['info'] = '交易成功';   
+        $ret['label'] = 'label label-success arrowed-in arrowed-in-right';
+    } else  if ($notify_ret == '1') {
+        $ret['info'] = '已提交'; 
+        $ret['label'] = 'label arrowed-in-right label-warning'; //                
+        //            } 
+    }  else  if($notify_ret == '2') { 
+
+        $ret['info'] = '办理中'; 
+        $ret['label'] = 'label arrowed-in-right label-warning'; // 
+    }  else  if($notify_ret == '3') { 
+
+        $ret['info'] = '已写卡'; 
+        $ret['label'] = 'label arrowed-in arrowed-in-right';
+    }   else  if($notify_ret == '4') { 
+
+        $ret['info'] = '已发货'; 
+        $ret['label'] = 'label arrowed-in arrowed-in-right';
+    }   else  if($notify_ret == '6') { 
+
+        $ret['info'] = '已撤单'; 
+        $ret['label'] = 'label label-sm label-warning';  
+    }   else  if($notify_ret == '7') { 
+
+        $ret['info'] = '以作废'; 
+        $ret['label'] = 'label label-sm label-warning';  ;
+    }    else  if($notify_ret == '8') { 
+
+        $ret['info'] = '未知异常'; 
+        $ret['label'] = 'label label-sm label-warning';  
+    }     else {
+        $ret['status'] = '-2';  
+        $ret['info'] = '未知异常'; 
+        $ret['label'] = 'label label-sm label-warning';  
+    }
+
+    $ret['msg'] = 'order_ret='.$order_ret.';notify_ret='.$notify_ret;
+    return $ret;
+
+}
+
 
 
