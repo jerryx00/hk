@@ -104,7 +104,8 @@ class HlyService  extends HlyCommonService{
         $paras = xml_encode($xmldata, 'Request');
 
         list($result, $returnContent) = http_post_hly($url, $paras, $token, $sign);
-
+//        dump($paras);
+//        dump($returnContent);
         // $result = 200;
         //        $returnContent = '
         //        <Response>
@@ -161,18 +162,26 @@ class HlyService  extends HlyCommonService{
         }
         \Think\Log::record('getNum ==>result: '.$result. ";ReturnMessage:".$returnContent);
         $Content = object_array($xml['Content']);
+        
         $ReturnCode = $Content['ReturnCode'];
         $ReturnMessage = $Content['ReturnMessage'];
 
         if ($ReturnCode == '0000') {
-            $con = object_array($Content);
-            $telList = $con['TelnumList'];
-            foreach ($telList as $k => $v) {
-                $telList[$k]['status'] = $ReturnCode;
-                $telList[$k]['remark'] = $ReturnMessage;
-            }
-            return $telList;
+            $telList = object_array($Content);
+            //$telList = $con['TelnumList'];
+//             dump($con);exit;
+            //foreach ($telList as $k => $v) {
+//                $telList[$k]['status'] = $ReturnCode;
+//                $telList[$k]['remark'] = $ReturnMessage;
+//            }
+           
+        } else {
+            $telList['ReturnCode']=$ReturnCode;
+            $telList['ReturnMessage'] = $Content['ReturnMessage'];
         }
+       
+        
+         return $telList;
     }
 
     public function idenCheck($d = []){
