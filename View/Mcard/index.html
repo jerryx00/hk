@@ -66,7 +66,7 @@
                         <div class="row">
                             <div class="col-xs-12">
                                 <!-- PAGE CONTENT BEGINS -->
-                                <form class="form-horizontal" action="{:U('search')}" method="post">   
+                                <form class="form-horizontal" action="{:U('search')}" method="post" name="form">   
                                     <div class="space-4"></div>
                                     <div class="form-group">
                                         <label class="col-sm-1 control-label no-padding-right" for="form-field-10">省份</label>
@@ -100,12 +100,22 @@
                                             <select id="offer_id" name="info[offer_id]" class="rcol-xs-10 col-sm-5" required>
                                                 <option value="">----请选择----</option>
                                                 <volist name="offers" id="o">
-                                                    <option value="{$o['offer_id']}">{$o['offer_name']}</option> 
+                                                    <option value="{$o['offer_id']}">{$o['offer_name']}-{$o['price']}元</option> 
                                                 </volist>   
                                             </select>
 
                                         </div>
                                     </div>
+
+                                    <div class="space-4"></div>                                    
+                                    <div class="form-group">
+
+                                        <label class="col-sm-1 control-label no-padding-right" for="form-field-10">商品价格</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" name="price" id="price" placeholder="商品价格" class="col-xs-10 col-sm-5" value="" >                                       
+                                        </div>
+                                    </div>
+
 
 
                                     <div class="space-4"></div>
@@ -175,5 +185,15 @@
 
     </body>
     <SCRIPT type=text/javascript>
+        $(function(){ 
+            $('#offer_id').change(function () {
+                var obj = $("#offer_id option:selected");
+                var  artime_text  = obj.text(); 
+                var arr = artime_text.split('-');
+                $("#price").val(arr[1]); 
+            })
+        });
+
+    </SCRIPT>
 
 </html>
