@@ -45,8 +45,10 @@
                                                     <th>#</th>
                                                     <th>商品编码</th>                                                 
                                                     <th>商品名称</th>
-                                                    <th>商品说明</th> 
-                                                    <th>操作</th>
+                                                    <th>售价</th> 
+                                                    <th>合约期</th> 
+                                                    <th>资费说明</th> 
+                                                    <th>营销活动</th>                                                       
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -63,9 +65,10 @@
                                                         <td>{$i}</td>                                 
                                                         <td>{$vo['offer_id']}</td>
                                                         <td>{$vo['offer_name']}</td>
-                                                        <td>{$vo['remark']}</td>                                                
-                                                        
-                                                        <td class="left" title=""></td>
+                                                        <td>{$vo['price']}</td>                                                
+                                                        <td>{$vo['period']}</td>                                                
+                                                        <td>{$vo['tariffdesc']}</td>                                                
+                                                        <td>{$vo['marketingcampaign']}</td>                                                
                                                     </tr>
                                                 </volist>
                                             </tbody>
